@@ -200,10 +200,10 @@ npm i -D prettier
 
 #### Configfile:
 
-Crie o arquivo `prettier.config.js` com o comando abaixo.
+Crie o arquivo `prettier.config.mjs` com o comando abaixo.
 
 ```bash
-echo '/** @type {import("prettier").Config} */\nconst config = {\n  arrowParens: "always",\n  useTabs: false,\n  printWidth: 79,\n  endOfLine: "lf",\n  tabWidth: 2,\n  semi: true,\n};\n\nexport default config;' > .prettierrc.js
+echo '/** @type {import("prettier").Config} */\nconst config = {\n  arrowParens: "always",\n  useTabs: false,\n  printWidth: 79,\n  endOfLine: "lf",\n  tabWidth: 2,\n  semi: true,\n};\n\nexport default config;' > prettier.config.mjs
 ```
 
 <details>
@@ -623,3 +623,5 @@ npx sb init --type react --builder vite --yes
 ## Criando componentes
 
 @TODO: descrever como criar um componente
+
+Vamos criar nosso primeiro pacote.
