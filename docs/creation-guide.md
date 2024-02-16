@@ -1,6 +1,6 @@
 # Guia de criação
 
-Template para monorepo de componentes React + Typescript + Material UI + Lerna + Turbo + Storybook
+Template para monorepo de componentes React + Typescript + Material UI + Lerna + Storybook
 
 <details>
 <summary>Índice</summary>
@@ -14,7 +14,6 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
   - [Typescript](#typescript)
   - [Jest](#jest)
   - [Lerna](#lerna)
-  - [Turbo](#turbo)
   - [Husky](#husky)
   - [Lint-staged](#lint-staged)
   - [Commitlint](#commitlint)
@@ -47,7 +46,7 @@ echo -e "# Dependências\n/node_modules\n\n# Diretórios de build e distribuiç�
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
 ```txt
@@ -55,19 +54,16 @@ echo -e "# Dependências\n/node_modules\n\n# Diretórios de build e distribuiç�
 /node_modules
 
 # Diretórios de build e distribuição
-
 /dist
 /build
 /lib
 /out
 
 # Arquivos de cache do cpompilador e da transpilação
-
 /.tscache
 /.turbo
 
 # Logs
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -75,19 +71,16 @@ pnpm-debug.log*
 lerna-debug.log\*
 
 # Cobertura de testes
-
 /coverage
 /.nyc_output
 
 # Diretórios e arquivos de configuração do editor
-
 /.vscode
 /.idea
 _.sublime-workspace
 _.sublime-project
 
 # Outros arquivos e diretórios
-
 .DS_Store
 Thumbs.db
 
@@ -103,17 +96,29 @@ Em seguida, inicie o projeto npm dentro do diretório.
 npm init -y
 ```
 
-Vamos utilizar o `npm workspaces`, então edite o arquivo `package.json` criado com o comando anterior e substitua o conteúdo atual pelo conteúdo abaixo.
+Vamos utilizar o [`workspaces`](https://docs.npmjs.com/cli/v7/using-npm/workspaces), então altere o arquivo `package.json`, criado anteriormente, com o comando abaixo.
+
+```bash
+echo '{\n  "name": "react-lib-components",\n  "version": "0.0.0",\n  "type": "module",\n  "private": true,\n  "workspaces": ["./packages/*"],\n  "description": "Monorepo template for React component library + TypeScript + Material UI + Lerna"\n}' > package.json
+```
+
+<details>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 
 ```json
 {
   "name": "react-lib-components",
+  "version": "0.0.0",
+  "type": "module",
   "private": true,
-  "workspaces": ["./packages/**/*"],
-  "description": "Monorepo template for React component library + TypeScript + Material UI + Lerna + Turbo",
-  "author": "SEU_NOME_AQUI"
+  "workspaces": ["./packages/*"],
+  "description": "Monorepo template for React component library + TypeScript + Material UI + Lerna"
 }
 ```
+
+</details>
+
+A propriedade `"workspaces": ["./packages/*"]` é essencial para o fluxo correto do nosso monorepo.
 
 ## Editorconfig
 
@@ -126,7 +131,7 @@ echo -e "# http://editorconfig.org\n\n# top-most EditorConfig file\nroot = true\
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
 ```yml
@@ -175,12 +180,6 @@ indent_style = space
 
 ## Dependências
 
-Agora vamos instalar algumas dependências no projeto, elas facilitarão nossa vida. O comando abaixo instala todas elas de uma vez, então nos próximos passos você poderá pular os comandos deste tópico que instalam dependências e são precedidos pelo texto: `Instale as dependências com o comando abaixo.` Se decidir instalar todas de uma vez você poderá realizar apenas os passos de criação de arquivos e configurações. Caso prefira instalar as dependências uma por uma, pode pular o comando abaixo e seguir para os próximos passos.
-
-```bash
-npm i -D typescript jest ts-jest @types/jest prettier eslint eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier  eslint-plugin-react @typescript-eslint/eslint-plugin @typescript-eslint/parser lerna turbo husky lint-staged @commitlint/{config-conventional,cli} react react-dom @mui/material @emotion/react @emotion/styled
-```
-
 ### Prettier
 
 [Prettier](https://prettier.io/) é uma ferramenta de formatação de código que suporta várias linguagens, incluindo JavaScript, CSS e HTML. Ele padroniza a formatação do código, melhorando a consistência e legibilidade. Pode ser integrado a editores de código e fluxos de trabalho de CI/CD, automatizando a formatação e garantindo um estilo de código uniforme entre os desenvolvedores.
@@ -191,18 +190,19 @@ Instale a dependência com o comando abaixo.
 npm i -D prettier
 ```
 
-Crie o arquivo `.prettierrc.js` com o comando abaixo.
+Crie o arquivo `prettier.config.js` com o comando abaixo.
 
 ```bash
-echo -e "module.exports = {\n  arrowParens: \"always\",\n  useTabs: false,\n  printWidth: 79,\n  endOfLine: \"lf\",\n  tabWidth: 2,\n  semi: true,\n};" > .prettierrc.js
+echo '/** @type {import("prettier").Config} */\nconst config = {\n  arrowParens: "always",\n  useTabs: false,\n  printWidth: 79,\n  endOfLine: "lf",\n  tabWidth: 2,\n  semi: true,\n};\n\nexport default config;' > .prettierrc.js
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
 ```js
-module.exports = {
+/** @type {import("prettier").Config} */
+const config = {
   arrowParens: "always",
   useTabs: false,
   printWidth: 79,
@@ -210,6 +210,8 @@ module.exports = {
   tabWidth: 2,
   semi: true,
 };
+
+export default config;
 ```
 
 </details>
@@ -224,18 +226,18 @@ Instale as dependências com o comando abaixo.
 npm i -D eslint eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier  eslint-plugin-react @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
 
-Crie o arquivo `.eslintrc.js` com o comando abaixo.
+Crie o arquivo `eslint.config.js` com o comando abaixo.
 
 ```bash
-echo -e "module.exports = {\n  env: {\n    browser: true,\n    es2020: true,\n    jest: true,\n    node: true,\n  },\n  extends: [\n    \"eslint:recommended\",\n    \"plugin:react/recommended\",\n    \"plugin:import/recommended\",\n    \"plugin:import/typescript\",\n    \"plugin:@typescript-eslint/recommended\",\n    \"prettier\",\n  ],\n  parser: \"@typescript-eslint/parser\",\n  parserOptions: {\n    ecmaVersion: \"latest\",\n    sourceType: \"module\",\n  },\n  plugins: [\"@typescript-eslint\", \"prettier\", \"react\"],\n  rules: {\n    \"prettier/prettier\": \"error\",\n    \"@typescript-eslint/no-var-requires\": 0,\n    \"react/react-in-jsx-scope\": 0,\n    \"import/order\": [\n      \"error\",\n      {\n        groups: [\"builtin\", \"external\", \"internal\"],\n        pathGroups: [\n          {\n            pattern: \"react\",\n            group: \"external\",\n            position: \"before\",\n          },\n        ],\n        pathGroupsExcludedImportTypes: [\"react\"],\n        \"newlines-between\": \"always\",\n        alphabetize: {\n          order: \"asc\",\n          caseInsensitive: true,\n        },\n      },\n    ],\n  },\n  settings: {\n    \"import/resolver\": {\n      typescript: {},\n    },\n    react: {\n      version: \"detect\",\n    },\n  },\n};" > .eslintrc.js
+echo "const config = {\n  env: {\n    browser: true,\n    es2020: true,\n    jest: true,\n    node: true,\n  },\n  extends: [\n    \"eslint:recommended\",\n    \"plugin:react/recommended\",\n    \"plugin:import/recommended\",\n    \"plugin:import/typescript\",\n    \"plugin:@typescript-eslint/recommended\",\n    \"prettier\",\n  ],\n  parser: \"@typescript-eslint/parser\",\n  parserOptions: {\n    ecmaVersion: \"latest\",\n    sourceType: \"module\",\n  },\n  plugins: [\"@typescript-eslint\", \"prettier\", \"react\"],\n  rules: {\n    \"prettier/prettier\": \"error\",\n    \"@typescript-eslint/no-var-requires\": 0,\n    \"react/react-in-jsx-scope\": 0,\n    \"import/order\": [\n      \"error\",\n      {\n        groups: [\"builtin\", \"external\", \"internal\"],\n        pathGroups: [\n          {\n            pattern: \"react\",\n            group: \"external\",\n            position: \"before\",\n          },\n        ],\n        pathGroupsExcludedImportTypes: [\"react\"],\n        \"newlines-between\": \"always\",\n        alphabetize: {\n          order: \"asc\",\n          caseInsensitive: true,\n        },\n      },\n    ],\n  },\n  settings: {\n    \"import/resolver\": {\n      typescript: {},\n    },\n    react: {\n      version: \"detect\",\n    },\n  },\n};\n\nexport default config;" > .eslintrc.js
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
 ```js
-module.exports = {
+const config = {
   env: {
     browser: true,
     es2020: true,
@@ -289,6 +291,8 @@ module.exports = {
     },
   },
 };
+
+export default config;
 ```
 
 </details>
@@ -306,45 +310,39 @@ npm i -D typescript
 Crie o arquivo `tsconfig.json` com o comando abaixo(esta é a configuração sugerida, mas você pode utilizar a de sua preferência).
 
 ```bash
-echo -e "{\n  \"compilerOptions\": {\n    /* Output Formatting Options */\n    \"skipLibCheck\": true,\n\n    /* Module Resolution Options */\n    \"module\": \"esnext\",\n    \"moduleResolution\": \"node\",\n    \"resolveJsonModule\": true,\n\n    /* Interop Constraints Options */\n    \"allowSyntheticDefaultImports\": true,\n    \"esModuleInterop\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"isolatedModules\": true,\n\n    /* Emit Options*/\n    \"noEmit\": true,\n\n    /* Type Checking Options */\n    \"strict\": true,\n    \"noFallthroughCasesInSwitch\": true,\n    \"noImplicitAny\": true,\n    \"noUnusedParameters\": true,\n    \"strictNullChecks\": true\n  },\n  \"exclude\": [\"node_modules\", \"lib\"]\n}" > tsconfig.json
+echo '{\n  "compilerOptions": {\n    "jsx": "react-jsx",\n    "skipLibCheck": true,\n    "module": "ESNext",\n    "moduleResolution": "Node",\n    "resolveJsonModule": true,\n    "allowSyntheticDefaultImports": true,\n    "esModuleInterop": true,\n    "forceConsistentCasingInFileNames": true,\n    "isolatedModules": true,\n    "noEmit": true,\n    "strict": true,\n    "noFallthroughCasesInSwitch": true,\n    "noImplicitAny": true,\n    "noUnusedParameters": true,\n    "strictNullChecks": true\n  },\n  "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export"]\n}' > tsconfig.json
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
 ```json
 {
   "compilerOptions": {
-    /* Output Formatting Options */
+    "jsx": "react-jsx",
     "skipLibCheck": true,
-
-    /* Module Resolution Options */
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
-
-    /* Interop Constraints Options */
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-
-    /* Emit Options*/
     "noEmit": true,
-
-    /* Type Checking Options */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noUnusedParameters": true,
     "strictNullChecks": true
   },
-  "exclude": ["node_modules", "lib"]
+  "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export"]
 }
 ```
 
 </details>
+
+Se após criar o `tsconfig.json` o editor acusar um erro, fique tranquilo, isso ocorre porque ainda não temos nenhum arquivo typescript no projeto.
 
 ### Jest
 
@@ -353,17 +351,17 @@ echo -e "{\n  \"compilerOptions\": {\n    /* Output Formatting Options */\n    \
 Instale as dependências com o comando abaixo.
 
 ```bash
-npm i -D jest ts-jest @types/jest
+npm i -D jest ts-jest @types/jest @testing-library/react @testing-library/jest-dom
 ```
 
 Crie o arquivo `jest.config.ts` com o comando abaixo.
 
 ```bash
-echo -e "import type { Config } from \"jest\";\n\nconst config: Config = {\n  verbose: true,\n  preset: \"ts-jest\",\n  collectCoverage: true,\n};\n\nexport default config;" > jest.config.ts
+echo "import type { Config } from \"jest\";\n\nconst config: Config = {\n  verbose: true,\n  preset: \"ts-jest\",\n  testEnvironment: \"jsdom\",\n  collectCoverage: true,\n};\n\nexport default config;" > jest.config.ts
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
 ```ts
@@ -372,6 +370,7 @@ import type { Config } from "jest";
 const config: Config = {
   verbose: true,
   preset: "ts-jest",
+  testEnvironment: "jsdom",
   collectCoverage: true,
 };
 
@@ -392,12 +391,14 @@ npm i -D lerna
 
 Crie o arquivo `lerna.json` com o comando abaixo.
 
+:bulb: _Se você está utilizando outro gerenciador de pacotes que não o `npm`, confira a [documentação](https://lerna.js.org/docs/api-reference/configuration) para adaptar as suas necessidades._
+
 ```bash
-echo -e "{\n  \"\$schema\": \"node_modules/lerna/schemas/lerna-schema.json\",\n  \"version\": \"independent\",\n  \"command\": {\n    \"publish\": {\n      \"conventionalCommits\": true,\n      \"message\": \"chore(release): publish\"\n    }\n  }\n}" > lerna.json
+echo '{\n  "$schema": "node_modules/lerna/schemas/lerna-schema.json",\n  "version": "independent",\n  "command": {\n    "publish": {\n      "conventionalCommits": true,\n      "message": "chore(release): version",\n      "exact": true\n    }\n  }\n}' > lerna.json
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
 ```json
@@ -407,7 +408,8 @@ echo -e "{\n  \"\$schema\": \"node_modules/lerna/schemas/lerna-schema.json\",\n 
   "command": {
     "publish": {
       "conventionalCommits": true,
-      "message": "chore(release): publish"
+      "message": "chore(release): version",
+      "exact": true
     }
   }
 }
@@ -418,52 +420,7 @@ echo -e "{\n  \"\$schema\": \"node_modules/lerna/schemas/lerna-schema.json\",\n 
 Adicione os scripts necessários ao `package.json` com o comando abaixo.
 
 ```bash
-npm pkg set scripts.version:stable="lerna version --yes" scripts.publish:stable="lerna publish from-git --yes" scripts.publish:canary="lerna publish --canary --no-git-tag-version --no-push --yes"
-```
-
-### Turbo
-
-[Turborepo](https://turborepo.org/) é uma ferramenta de construção e gerenciamento de projetos para JavaScript e TypeScript, otimizada para monorepos. Ela permite a construção eficiente de vários pacotes com cache inteligente e execução paralela, melhorando a velocidade e a eficiência do desenvolvimento.
-
-Instale a dependência com o comando abaixo.
-
-```bash
-npm i -D turbo
-```
-
-Crie o arquivo `turbo.json` com o comando abaixo.
-
-```bash
-echo -e "{\n  \"\$schema\": \"https://turborepo.org/schema.json\",\n  \"pipeline\": {\n    \"build\": {\n      \"outputs\": [\"build/**\"],\n      \"dependsOn\": [\"^build\"]\n    },\n    \"test\": {\n      \"inputs\": [\"src/**/*.ts\"],\n      \"outputs\": [],\n      \"dependsOn\": [\"build\"]\n    }\n  }\n}" > turbo.json
-```
-
-<details>
-<summary>Clique para ver todo o conteúdo.</summary>
-<br/>
-
-```json
-{
-  "$schema": "https://turborepo.org/schema.json",
-  "pipeline": {
-    "build": {
-      "outputs": ["build/**"],
-      "dependsOn": ["^build"]
-    },
-    "test": {
-      "inputs": ["src/**/*.ts"],
-      "outputs": [],
-      "dependsOn": ["build"]
-    }
-  }
-}
-```
-
-</details>
-
-Adicione os scripts do Turbo ao `package.json` com o comando abaixo.
-
-```bash
-npm pkg set scripts.test="turbo run test" scripts.build="turbo run build"
+npm pkg set scripts.version="lerna version --yes" scripts.publish:stable="lerna publish from-package --no-private --yes" scripts.publish:canary="lerna publish --canary --no-private --no-git-tag-version --no-push --yes"
 ```
 
 ### Husky
@@ -476,10 +433,10 @@ Instale a dependência com o comando abaixo.
 npm i -D husky
 ```
 
-Habilite os hooks do Git e adicione o script `prepare` ao `package.json` com o comando abaixo.
+Inicialize a configuração do husky com o comando abaixo.
 
 ```bash
-npx husky install && npm pkg set scripts.prepare="husky install"
+npx husky init
 ```
 
 ### Lint-staged
@@ -492,50 +449,39 @@ Instale as dependências com o comando abaixo.
 npm i -D lint-staged
 ```
 
-Crie o arquivo `.lintstagedrc` com o comando abaixo.
+Crie o arquivo `lint-staged.config.js` com o comando abaixo.
 
 ```bash
-echo -e "{\n  \"*.{js,jsx,ts,tsx,json,md}\": [\"prettier --write\"],\n  \"*.{js,jsx,ts,tsx}\": [\n    \"eslint --fix --report-unused-disable-directives --max-warnings 0\"\n  ]\n}" > .lintstagedrc
+echo "const config = {\n  \"*.{js,jsx,ts,tsx,json,md}\": [\"prettier --write\"],\n  \"*.{js,jsx,ts,tsx}\": [\n    \"eslint --fix --report-unused-disable-directives --max-warnings 0\",\n  ],\n};\n\nexport default config;" > lint-staged.config.js
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
-```json
-{
+```js
+const config = {
   "*.{js,jsx,ts,tsx,json,md}": ["prettier --write"],
   "*.{js,jsx,ts,tsx}": [
-    "eslint --fix --report-unused-disable-directives --max-warnings 0"
-  ]
-}
+    "eslint --fix --report-unused-disable-directives --max-warnings 0",
+  ],
+};
+
+export default config;
 ```
 
 </details>
 
-<table>
-  <tr>
-    <th style="width: 300px;">Flag</th>
-    <th>Descrição</th>
-  </tr>
-  <tr>
-    <td><code>--fix</code></td>
-    <td>Tenta corrigir automaticamente problemas encontrados que possuem correções disponíveis.</td>
-  </tr>
-  <tr>
-    <td><code>--report-unused-disable-directives</code></td>
-    <td>Reporta as diretivas <code>eslint-disable</code> que são desnecessárias porque as regras que elas desativavam não são violadas.</td>
-  </tr>
-  <tr>
-    <td><code>--max-warnings</code></td>
-    <td>Define o número máximo de avisos permitidos. Com <code>0</code>, até um único aviso resulta em falha de execução.</td>
-  </tr>
-</table>
+| Flag                                 | Descrição                                                                                                            |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `--fix`                              | Tenta corrigir automaticamente problemas encontrados que possuem correções disponíveis.                              |
+| `--report-unused-disable-directives` | Reporta as diretivas `eslint-disable` que são desnecessárias porque as regras que elas desativavam não são violadas. |
+| `--max-warnings`                     | Define o número máximo de avisos permitidos. Com `0`, até um único aviso resulta em falha de execução.               |
 
-Adicione o hook de pre-commit com o comando abaixo.
+Altere o hook de pre-commit com o comando abaixo.
 
 ```bash
-npx husky add .husky/pre-commit "npx lint-staged"
+echo "npx lint-staged" > .husky/pre-commit
 ```
 
 ### Commitlint
@@ -555,7 +501,7 @@ echo -e "import type { UserConfig } from \"@commitlint/types\";\n\nconst Configu
 ```
 
 <details>
-<summary>Clique para ver todo o conteúdo.</summary>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
 ```ts
@@ -573,7 +519,7 @@ module.exports = Configuration;
 Adicione o hook de commit-msg com o comando abaixo.
 
 ```bash
-npx husky add .husky/commit-msg "npx --no -- commitlint --edit ${1}"
+echo "npx --no -- commitlint --edit \$1" > .husky/commit-msg
 ```
 
 ### React
@@ -612,33 +558,20 @@ Inicialize a configuração do Commitizen com o comando abaixo.
 npx commitizen init cz-conventional-changelog --npm --save-dev --exact
 ```
 
-<table>
-  <tr>
-    <th style="width: 100px;">Flag</th>
-    <th>Descrição</th>
-  </tr>
-  <tr>
-    <td><code>--npm</code></td>
-    <td>Especifica que o NPM deve ser usado para instalar o adaptador. Útil em ambientes com múltiplos gerenciadores de pacotes.</td>
-  </tr>
-  <tr>
-    <td><code>--save-dev</code></td>
-    <td>Adiciona o adaptador como uma dependência de desenvolvimento no arquivo <code>package.json</code>. Não será incluído em produção.</td>
-  </tr>
-  <tr>
-    <td><code>--exact</code></td>
-    <td>Garante a instalação da versão exata do adaptador, sem usar range de versões, para consistência entre os ambientes de desenvolvimento.</td>
-  </tr>
-</table>
+| Flag         | Descrição                                                                                                                              |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `--npm`      | Especifica que o NPM deve ser usado para instalar o adaptador. Útil em ambientes com múltiplos gerenciadores de pacotes.               |
+| `--save-dev` | Adiciona o adaptador como uma dependência de desenvolvimento no arquivo `package.json`. Não será incluído em produção.                 |
+| `--exact`    | Garante a instalação da versão exata do adaptador, sem usar range de versões, para consistência entre os ambientes de desenvolvimento. |
 
 ## Storybook
 
 [Storybook](https://storybook.js.org/) é uma ferramenta de desenvolvimento de interface do usuário (UI) para componentes de front-end. Ela permite aos desenvolvedores criar e visualizar componentes de UI isoladamente, facilitando o desenvolvimento e teste. Suporta frameworks como React, Vue, Angular e outros, tornando-se uma escolha popular para a documentação de componentes e construção de bibliotecas de design.
 
-Inicialize a configuração do Storybook para React jutamente com o builder do vite.
+Inicialize a configuração do Storybook para React jutamente com o builder do vite. :coffee: Pega um café que essa etapa demora um pouquinho.
 
 ```bash
-npx sb init --type react --builder vite
+npx sb init --type react --builder vite --yes
 ```
 
 @TODO: ajustar arquivo de configuração do Storybook
