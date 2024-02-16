@@ -39,6 +39,8 @@ Inicie o repositório git caso não o tenha feito.
 git init -b main
 ```
 
+#### Configfile:
+
 Crie o arquivo `.gitignore` com o comando abaixo.
 
 ```bash
@@ -96,6 +98,8 @@ Em seguida, inicie o projeto npm dentro do diretório.
 npm init -y
 ```
 
+#### Configfile:
+
 Vamos utilizar o [`workspaces`](https://docs.npmjs.com/cli/v7/using-npm/workspaces), então altere o arquivo `package.json`, criado anteriormente, com o comando abaixo.
 
 ```bash
@@ -123,6 +127,8 @@ A propriedade `"workspaces": ["./packages/*"]` é essencial para o fluxo correto
 ## Editorconfig
 
 [Editorconfig](https://editorconfig.org/) é uma ferramenta de codificação que ajuda a manter estilos de codificação consistentes em diferentes editores e IDEs. Ele funciona através de um arquivo `.editorconfig` no repositório do projeto, definindo regras para indentação, espaços finais, conjunto de caracteres e outros estilos de código.
+
+#### Configfile:
 
 Crie o arquivo `.editorconfig` com o comando abaixo.
 
@@ -184,11 +190,15 @@ indent_style = space
 
 [Prettier](https://prettier.io/) é uma ferramenta de formatação de código que suporta várias linguagens, incluindo JavaScript, CSS e HTML. Ele padroniza a formatação do código, melhorando a consistência e legibilidade. Pode ser integrado a editores de código e fluxos de trabalho de CI/CD, automatizando a formatação e garantindo um estilo de código uniforme entre os desenvolvedores.
 
+#### Deps:
+
 Instale a dependência com o comando abaixo.
 
 ```bash
 npm i -D prettier
 ```
+
+#### Configfile:
 
 Crie o arquivo `prettier.config.js` com o comando abaixo.
 
@@ -220,11 +230,15 @@ export default config;
 
 [Eslint](https://eslint.org/) é uma ferramenta de análise de código estática para identificar padrões problemáticos encontrados em código JavaScript. Ele é amplamente configurável, permitindo a personalização de regras para garantir a qualidade e consistência do código. Também é comumente usado para fazer cumprir as diretrizes de estilo de codificação, trabalhando em conjunto com ferramentas como Prettier.
 
+#### Deps:
+
 Instale as dependências com o comando abaixo.
 
 ```bash
 npm i -D eslint eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier  eslint-plugin-react @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
+
+#### Configfile:
 
 Crie o arquivo `eslint.config.js` com o comando abaixo.
 
@@ -301,11 +315,15 @@ export default config;
 
 [TypeScript](https://www.typescriptlang.org/) é uma linguagem de programação desenvolvida pela Microsoft, um superset do JavaScript, que adiciona tipagem estática opcional. Isso permite que os desenvolvedores detectem erros mais facilmente e organizem o código de forma mais eficiente, especialmente em projetos grandes.
 
+#### Deps:
+
 Instale a dependência com comando abaixo.
 
 ```bash
 npm i -D typescript
 ```
+
+#### Configfile:
 
 Crie o arquivo `tsconfig.json` com o comando abaixo(esta é a configuração sugerida, mas você pode utilizar a de sua preferência).
 
@@ -348,11 +366,15 @@ Se após criar o `tsconfig.json` o editor acusar um erro, fique tranquilo, isso 
 
 [Jest](https://jestjs.io/) é uma popular ferramenta de testes para JavaScript, conhecida por sua simplicidade e suporte a testes de snapshots. Oferece uma experiência de teste integrada com funções para criar, executar e estruturar testes, além de mockar objetos. É amplamente usada em aplicações React.
 
+#### Deps:
+
 Instale as dependências com o comando abaixo.
 
 ```bash
 npm i -D jest ts-jest @types/jest @testing-library/react @testing-library/jest-dom
 ```
+
+#### Configfile:
 
 Crie o arquivo `jest.config.ts` com o comando abaixo.
 
@@ -383,11 +405,15 @@ export default config;
 
 [Lerna](https://lerna.js.org/) é uma ferramenta de gerenciamento de projetos JavaScript que otimiza o fluxo de trabalho em monorepos. Ela facilita a manutenção de múltiplos pacotes em um único repositório, automatizando tarefas como versionamento, publicação de pacotes e gerenciamento de dependências.
 
+#### Deps:
+
 Instale a dependência com o comando abaixo.
 
 ```bash
 npm i -D lerna
 ```
+
+#### Configfile:
 
 Crie o arquivo `lerna.json` com o comando abaixo.
 
@@ -427,6 +453,8 @@ npm pkg set scripts.version="lerna version --yes" scripts.publish:stable="lerna 
 
 [Husky](https://typicode.github.io/husky/) é uma ferramenta de desenvolvimento para JavaScript que facilita a gestão de ganchos Git (Git hooks). Ela permite a configuração de scripts personalizados que são executados em eventos específicos do Git, como commit ou push, ajudando a manter a qualidade e a consistência do código.
 
+#### Deps:
+
 Instale a dependência com o comando abaixo.
 
 ```bash
@@ -443,11 +471,15 @@ npx husky init
 
 [Lint-staged](https://github.com/lint-staged/lint-staged) é uma ferramenta de desenvolvimento que executa linters em arquivos versionados pelo Git, mas que ainda não foram commitados. Ela melhora a eficiência ao focar apenas nos arquivos alterados, garantindo que o código atenda a padrões específicos antes dos commits.
 
+#### Deps:
+
 Instale as dependências com o comando abaixo.
 
 ```bash
 npm i -D lint-staged
 ```
+
+#### Configfile:
 
 Crie o arquivo `lint-staged.config.js` com o comando abaixo.
 
@@ -488,11 +520,15 @@ echo "npx lint-staged" > .husky/pre-commit
 
 [Commitlint](https://commitlint.js.org/) é uma ferramenta de desenvolvimento que ajuda a manter a consistência dos mensagens de commit no Git. Ela verifica se as mensagens seguem um formato predefinido, baseado em convenções como [Conventional Commits](https://www.conventionalcommits.org/), aumentando a legibilidade e a organização do histórico de commits.
 
+#### Deps:
+
 Instale as dependências com o comando abaixo.
 
 ```bash
 npm i -D @commitlint/{config-conventional,cli}
 ```
+
+#### Configfile:
 
 Crie o arquivo `commitlint.config.ts` com o comando abaixo.
 
@@ -526,6 +562,8 @@ echo "npx --no -- commitlint --edit \$1" > .husky/commit-msg
 
 [React](https://reactjs.org/) é uma biblioteca JavaScript de código aberto para construir interfaces de usuário. Desenvolvida pelo Facebook, é usada para criar componentes reutilizáveis e gerenciar o estado em aplicações web de uma página (SPA). React é conhecido por seu modelo de componentes declarativos e pela eficiente atualização do DOM através de um algoritmo de reconciliação, o Virtual DOM.
 
+#### Deps:
+
 Instale as dependências com o comando abaixo.
 
 ```bash
@@ -536,6 +574,8 @@ npm i -D react react-dom
 
 [Material UI](https://mui.com/) é uma biblioteca de componentes React popular que implementa o Material Design do Google. Oferece uma vasta gama de componentes UI prontos para uso, como botões, caixas de diálogo, cards, entre outros, facilitando o desenvolvimento de interfaces atrativas e funcionais. Além disso, é altamente personalizável e otimizado para acessibilidade.
 
+#### Deps:
+
 Instale as dependências com o comando abaixo.
 
 ```bash
@@ -545,6 +585,8 @@ npm i -D @mui/material @emotion/react @emotion/styled
 ## Commitizen
 
 [Commitizen](https://commitizen-tools.github.io/commitizen/) é uma ferramenta de linha de comando que padroniza as mensagens de commit do Git. Ele guia os desenvolvedores por um prompt de perguntas para criar um commit formatado de forma consistente e legível, facilitando a automação de versionamento e geração de changelogs. É amplamente usado em projetos que seguem as convenções de mensagens de commit, como o [Conventional Commits](https://www.conventionalcommits.org/).
+
+#### Deps:
 
 Instale globalmente com o comando abaixo.
 
@@ -567,6 +609,8 @@ npx commitizen init cz-conventional-changelog --npm --save-dev --exact
 ## Storybook
 
 [Storybook](https://storybook.js.org/) é uma ferramenta de desenvolvimento de interface do usuário (UI) para componentes de front-end. Ela permite aos desenvolvedores criar e visualizar componentes de UI isoladamente, facilitando o desenvolvimento e teste. Suporta frameworks como React, Vue, Angular e outros, tornando-se uma escolha popular para a documentação de componentes e construção de bibliotecas de design.
+
+#### Deps:
 
 Inicialize a configuração do Storybook para React jutamente com o builder do vite. :coffee: Pega um café que essa etapa demora um pouquinho.
 
