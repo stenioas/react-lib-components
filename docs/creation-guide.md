@@ -21,9 +21,13 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
   - [Material UI](#material-ui)
 - [Commitizen](#commitizen)
 - [Storybook](#storybook)
-- [Criando componentes](#criando-componentes)
+- [Criando Pacotes](#criando-pacotes)
 
 </details>
+
+:warning: **_Neste guia não entrarei em detalhes sobre propriedades dos arquivos de configuração, comandos e afins, para saber mais sobre isso acesse a documentação de cada ferramenta utilizada._**
+
+:warning: **_Todos os comandos deste guia devem ser executados na raiz do projeto._**
 
 ## Getting started
 
@@ -103,8 +107,10 @@ npm init -y
 Vamos utilizar o [`workspaces`](https://docs.npmjs.com/cli/v7/using-npm/workspaces), então altere o arquivo `package.json`, criado anteriormente, com o comando abaixo.
 
 ```bash
-echo '{\n  "name": "react-lib-components",\n  "version": "0.0.0",\n  "type": "module",\n  "private": true,\n  "workspaces": ["./packages/*"],\n  "description": "Monorepo template for React component library + TypeScript + Material UI + Lerna"\n}' > package.json
+echo -e "{\n  \"name\": \"react-lib-components\",\n  \"version\": \"0.0.0\",\n  \"type\": \"module\",\n  \"private\": true,\n  \"workspaces\": [\"packages/*\"],\n  \"description\": \"Monorepo template for React component library + TypeScript + Material UI + Lerna\"\n}" >> some-file.json
 ```
+
+A propriedade `"workspaces": ["./packages/*"]` é essencial para o fluxo correto do nosso monorepo.
 
 <details>
 <summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
@@ -115,14 +121,12 @@ echo '{\n  "name": "react-lib-components",\n  "version": "0.0.0",\n  "type": "mo
   "version": "0.0.0",
   "type": "module",
   "private": true,
-  "workspaces": ["./packages/*"],
+  "workspaces": ["packages/*"],
   "description": "Monorepo template for React component library + TypeScript + Material UI + Lerna"
 }
 ```
 
 </details>
-
-A propriedade `"workspaces": ["./packages/*"]` é essencial para o fluxo correto do nosso monorepo.
 
 ## Editorconfig
 
@@ -203,14 +207,14 @@ npm i -D prettier
 Crie o arquivo `prettier.config.mjs` com o comando abaixo.
 
 ```bash
-echo '/** @type {import("prettier").Config} */\nconst config = {\n  arrowParens: "always",\n  useTabs: false,\n  printWidth: 79,\n  endOfLine: "lf",\n  tabWidth: 2,\n  semi: true,\n};\n\nexport default config;' > prettier.config.mjs
+echo -e "/** @type {import(\"prettier\").Config} */\nconst config = {\n  arrowParens: \"always\",\n  useTabs: false,\n  printWidth: 79,\n  endOfLine: \"lf\",\n  tabWidth: 2,\n  semi: true,\n};\n\nexport default config;" > prettier.config.mjs
 ```
 
 <details>
 <summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
 <br/>
 
-```js
+```mjs
 /** @type {import("prettier").Config} */
 const config = {
   arrowParens: "always",
@@ -240,10 +244,10 @@ npm i -D eslint eslint-config-prettier eslint-import-resolver-typescript eslint-
 
 #### Configfile:
 
-Crie o arquivo `eslint.config.js` com o comando abaixo.
+Crie o arquivo `.eslintrc.cjs` com o comando abaixo.
 
 ```bash
-echo "const config = {\n  env: {\n    browser: true,\n    es2020: true,\n    jest: true,\n    node: true,\n  },\n  extends: [\n    \"eslint:recommended\",\n    \"plugin:react/recommended\",\n    \"plugin:import/recommended\",\n    \"plugin:import/typescript\",\n    \"plugin:@typescript-eslint/recommended\",\n    \"prettier\",\n  ],\n  parser: \"@typescript-eslint/parser\",\n  parserOptions: {\n    ecmaVersion: \"latest\",\n    sourceType: \"module\",\n  },\n  plugins: [\"@typescript-eslint\", \"prettier\", \"react\"],\n  rules: {\n    \"prettier/prettier\": \"error\",\n    \"@typescript-eslint/no-var-requires\": 0,\n    \"react/react-in-jsx-scope\": 0,\n    \"import/order\": [\n      \"error\",\n      {\n        groups: [\"builtin\", \"external\", \"internal\"],\n        pathGroups: [\n          {\n            pattern: \"react\",\n            group: \"external\",\n            position: \"before\",\n          },\n        ],\n        pathGroupsExcludedImportTypes: [\"react\"],\n        \"newlines-between\": \"always\",\n        alphabetize: {\n          order: \"asc\",\n          caseInsensitive: true,\n        },\n      },\n    ],\n  },\n  settings: {\n    \"import/resolver\": {\n      typescript: {},\n    },\n    react: {\n      version: \"detect\",\n    },\n  },\n};\n\nexport default config;" > .eslintrc.js
+echo "const config = {\n  env: {\n    browser: true,\n    es2020: true,\n    jest: true,\n    node: true,\n  },\n  extends: [\n    \"eslint:recommended\",\n    \"plugin:react/recommended\",\n    \"plugin:import/recommended\",\n    \"plugin:import/typescript\",\n    \"plugin:@typescript-eslint/recommended\",\n    \"prettier\",\n  ],\n  parser: \"@typescript-eslint/parser\",\n  parserOptions: {\n    ecmaVersion: \"latest\",\n    sourceType: \"module\",\n  },\n  plugins: [\"@typescript-eslint\", \"prettier\", \"react\"],\n  rules: {\n    \"prettier/prettier\": \"error\",\n    \"@typescript-eslint/no-var-requires\": 0,\n    \"react/react-in-jsx-scope\": 0,\n    \"import/order\": [\n      \"error\",\n      {\n        groups: [\"builtin\", \"external\", \"internal\"],\n        pathGroups: [\n          {\n            pattern: \"react\",\n            group: \"external\",\n            position: \"before\",\n          },\n        ],\n        pathGroupsExcludedImportTypes: [\"react\"],\n        \"newlines-between\": \"always\",\n        alphabetize: {\n          order: \"asc\",\n          caseInsensitive: true,\n        },\n      },\n    ],\n  },\n  settings: {\n    \"import/resolver\": {\n      typescript: {},\n    },\n    react: {\n      version: \"detect\",\n    },\n  },\n};\n\nmodule.exports = config;" > .eslintrc.cjs
 ```
 
 <details>
@@ -306,7 +310,7 @@ const config = {
   },
 };
 
-export default config;
+module.exports = config;
 ```
 
 </details>
@@ -320,7 +324,7 @@ export default config;
 Instale a dependência com comando abaixo.
 
 ```bash
-npm i -D typescript
+npm i -D typescript ts-node
 ```
 
 #### Configfile:
@@ -328,7 +332,7 @@ npm i -D typescript
 Crie o arquivo `tsconfig.json` com o comando abaixo(esta é a configuração sugerida, mas você pode utilizar a de sua preferência).
 
 ```bash
-echo '{\n  "compilerOptions": {\n    "jsx": "react-jsx",\n    "skipLibCheck": true,\n    "module": "ESNext",\n    "moduleResolution": "Node",\n    "resolveJsonModule": true,\n    "allowSyntheticDefaultImports": true,\n    "esModuleInterop": true,\n    "forceConsistentCasingInFileNames": true,\n    "isolatedModules": true,\n    "noEmit": true,\n    "strict": true,\n    "noFallthroughCasesInSwitch": true,\n    "noImplicitAny": true,\n    "noUnusedParameters": true,\n    "strictNullChecks": true\n  },\n  "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export"]\n}' > tsconfig.json
+echo '{\n  "compilerOptions": {\n    "jsx": "react-jsx",\n    "skipLibCheck": true,\n    "module": "ESNext",\n    "moduleResolution": "Node",\n    "resolveJsonModule": true,\n    "allowSyntheticDefaultImports": true,\n    "esModuleInterop": true,\n    "forceConsistentCasingInFileNames": true,\n    "isolatedModules": true,\n    "noEmit": true,\n    "strict": true,\n    "noFallthroughCasesInSwitch": true,\n    "noImplicitAny": true,\n    "noUnusedParameters": true,\n    "strictNullChecks": true\n  },\n  "exclude": ["**/.*/", "**/build", "**/node_modules"]\n}' > tsconfig.json
 ```
 
 <details>
@@ -354,7 +358,7 @@ echo '{\n  "compilerOptions": {\n    "jsx": "react-jsx",\n    "skipLibCheck": tr
     "noUnusedParameters": true,
     "strictNullChecks": true
   },
-  "exclude": ["**/.*/", "**/build", "**/node_modules", "docs/export"]
+  "exclude": ["**/.*/", "**/build", "**/node_modules"]
 }
 ```
 
@@ -379,7 +383,7 @@ npm i -D jest ts-jest @types/jest @testing-library/react @testing-library/jest-d
 Crie o arquivo `jest.config.ts` com o comando abaixo.
 
 ```bash
-echo "import type { Config } from \"jest\";\n\nconst config: Config = {\n  verbose: true,\n  preset: \"ts-jest\",\n  testEnvironment: \"jsdom\",\n  collectCoverage: true,\n};\n\nexport default config;" > jest.config.ts
+echo -e "import type { Config } from \"jest\";\n\nconst config: Config = {\n  verbose: true,\n  preset: \"ts-jest\",\n  testEnvironment: \"jsdom\",\n  collectCoverage: true,\n};\n\nexport default config;" > jest.config.ts
 ```
 
 <details>
@@ -420,7 +424,7 @@ Crie o arquivo `lerna.json` com o comando abaixo.
 :bulb: _Se você está utilizando outro gerenciador de pacotes que não o `npm`, confira a [documentação](https://lerna.js.org/docs/api-reference/configuration) para adaptar as suas necessidades._
 
 ```bash
-echo '{\n  "$schema": "node_modules/lerna/schemas/lerna-schema.json",\n  "version": "independent",\n  "command": {\n    "publish": {\n      "conventionalCommits": true,\n      "message": "chore(release): version",\n      "exact": true\n    }\n  }\n}' > lerna.json
+echo -e "{\n  \"\$schema\": \"node_modules/lerna/schemas/lerna-schema.json\",\n  \"version\": \"independent\",\n  \"command\": {\n    \"publish\": {\n      \"conventionalCommits\": true,\n      \"message\": \"chore(release): version\",\n      \"exact\": true\n    }\n  }\n}" > lerna.json
 ```
 
 <details>
@@ -443,10 +447,12 @@ echo '{\n  "$schema": "node_modules/lerna/schemas/lerna-schema.json",\n  "versio
 
 </details>
 
+#### Scripts
+
 Adicione os scripts necessários ao `package.json` com o comando abaixo.
 
 ```bash
-npm pkg set scripts.version="lerna version --yes" scripts.publish:stable="lerna publish from-package --no-private --yes" scripts.publish:canary="lerna publish --canary --no-private --no-git-tag-version --no-push --yes"
+npm pkg set scripts.build="lerna run build" scripts.test="lerna run test" scripts.clean="lerna run clean --parallel" scripts.version="lerna version --yes" scripts.publish:stable="lerna publish from-package --no-private --yes" scripts.publish:canary="lerna publish --canary --no-private --no-git-tag-version --no-push --yes"
 ```
 
 ### Husky
@@ -484,7 +490,7 @@ npm i -D lint-staged
 Crie o arquivo `lint-staged.config.js` com o comando abaixo.
 
 ```bash
-echo "const config = {\n  \"*.{js,jsx,ts,tsx,json,md}\": [\"prettier --write\"],\n  \"*.{js,jsx,ts,tsx}\": [\n    \"eslint --fix --report-unused-disable-directives --max-warnings 0\",\n  ],\n};\n\nexport default config;" > lint-staged.config.js
+echo "const config = { \"*.{js,jsx,ts,tsx,json,md}\": [\"prettier --write\"], \"*.{js,jsx,ts,tsx}\": [\"eslint --fix --report-unused-disable-directives --max-warnings 0\"] }; export default config;" > lint-staged.config.js
 ```
 
 <details>
@@ -510,7 +516,9 @@ export default config;
 | `--report-unused-disable-directives` | Reporta as diretivas `eslint-disable` que são desnecessárias porque as regras que elas desativavam não são violadas. |
 | `--max-warnings`                     | Define o número máximo de avisos permitidos. Com `0`, até um único aviso resulta em falha de execução.               |
 
-Altere o hook de pre-commit com o comando abaixo.
+#### Scripts
+
+Altere o script do hook de pre-commit com o comando abaixo.
 
 ```bash
 echo "npx lint-staged" > .husky/pre-commit
@@ -552,7 +560,9 @@ module.exports = Configuration;
 
 </details>
 
-Adicione o hook de commit-msg com o comando abaixo.
+#### Scripts
+
+Adicione o script do hook de commit-msg com o comando abaixo.
 
 ```bash
 echo "npx --no -- commitlint --edit \$1" > .husky/commit-msg
@@ -615,13 +625,328 @@ npx commitizen init cz-conventional-changelog --npm --save-dev --exact
 Inicialize a configuração do Storybook para React jutamente com o builder do vite. :coffee: Pega um café que essa etapa demora um pouquinho.
 
 ```bash
-npx sb init --type react --builder vite --yes
+npx storybook@latest init --builder vite --yes
 ```
 
 @TODO: ajustar arquivo de configuração do Storybook
 
-## Criando componentes
+## Criando Pacotes
 
-@TODO: descrever como criar um componente
+:bulb: Para este guia irei manter todos os pacote no mesmo escopo, então todos os pacotes terão o `@react-lib-components` no início do nome.
 
-Vamos criar nosso primeiro pacote.
+### Estrutura dos pacotes
+
+Vamos criar nosso primeiro pacote. Crie a pasta `packages` no diretório raiz do nosso projeto, ela será nosso workspace e todos os pacotes devem ficar dentro dela.
+
+```bash
+mkdir ./packages
+```
+
+### Pacote Um
+
+Dentro da pasta `packages`, crie um novo diretório para o nosso pacote. Para este guia vou criar o diretório `pacote-um`.
+
+```bash
+mkdir ./packages/pacote-um
+```
+
+Nosso pacote precisa ter um `package.json`, então vamos criá-lo com o comando abaixo.
+
+```bash
+cd ./packages/pacote-um && npm init -y && cd ../..
+```
+
+Altere o `package.json` com o comando abaixo.
+
+```bash
+echo -e "{\n  \"name\": \"@react-lib-components/pacote-um\",\n  \"version\": \"0.0.1\",\n  \"description\": \"Pacote um do template de monorepo\",\n  \"module\": \"./index.js\",\n  \"types\": \"./index.d.ts\",\n  \"files\": [\"./build\"]\n}" > ./packages/pacote-um/package.json
+```
+
+<details>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<br/>
+
+```json
+{
+  "name": "@react-lib-components/pacote-um",
+  "version": "0.0.1",
+  "description": "Pacote um do template de monorepo",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "files": ["./build"]
+}
+```
+
+</details>
+
+Agora crie o arquivo `tsconfig.json` específico para o **pacote-um**.
+
+```bash
+echo -e "{\n  \"extends\": \"../../tsconfig.json\",\n  \"compilerOptions\": {\n    \"composite\": true,\n    \"module\": \"esnext\",\n    \"target\": \"es5\",\n    \"lib\": [\"DOM\", \"DOM.Iterable\", \"ESNext\"],\n    \"allowJs\": true,\n    \"declaration\": true,\n    \"noEmit\": false,\n    \"outDir\": \"build\",\n    \"rootDir\": \"./src\"\n  },\n  \"include\": [\"src/**/*\"],\n  \"exclude\": [\"**/*.stories.ts*\", \"**/*.test.ts*\", \"**/*.spec.ts*\"]\n}" > ./packages/pacote-um/tsconfig.json
+```
+
+<details>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<br/>
+
+```json
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "declaration": true,
+    "noEmit": false,
+    "outDir": "build",
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.stories.ts*", "**/*.test.ts*", "**/*.spec.ts*"]
+}
+```
+
+</details>
+
+Atualmente, a estrutura de arquivos do nosso projeto deve estar igual ao formato abaixo.
+
+```txt
+.
+├─.husky
+├─.storybook
+├─node_modules
+├─packages
+│   └─pacote-um
+│       ├─package.json
+│       └─tsconfig.json
+├─stories
+├─.editorconfig
+├─.eslintrc.js
+├─.gitignore
+├─commitlint.config.ts
+├─jest.config.ts
+├─lerna.json
+├─lint-staged.config.js
+├─package-lock.json
+├─package.json
+├─prettier.config.mjs
+└─tsconfig.json
+```
+
+Instale o React e o Material UI como devDependencies do nosso pacote.
+
+```bash
+cd ./packages/pacote-um && npm i react react-dom @mui/material @emotion/react @emotion/styled && cd ../..
+```
+
+As peerDependencies garantem que o pacote consumidor tenha instalado as dependências corretas de que o pacote necessita para funcionar, sem forçar versões múltiplas das mesmas bibliotecas. Isso é vital para evitar conflitos de versão e inchaço desnecessário do node_modules. Após instalar as dependências, altere a propriedade `devDependencies` no `package.json` para `peerDependencies`, ficando como abaixo.
+
+```json
+{
+  "name": "@react-lib-components/pacote-um",
+  "version": "0.0.1",
+  "description": "Pacote um do template de monorepo",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "files": ["./build"],
+  "peerDependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.10",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
+```
+
+#### Componente
+
+É possível ter vários componentes dentro de um único pacote, a escolha depende muito da necessidade do projeto. Para este guia vamos criar um único componente simples dentro do nosso pacote.
+
+Crie uma pasta `src` na pasta **pacote-um** para armazenar todo o código fonte do nosso pacote.
+
+```bash
+mkdir ./packages/pacote-um/src
+```
+
+Dentro da pasta `./packages/pacote-um/src`, crie o arquivo `Button.tsx` e cole o conteúdo abaixo.
+
+```tsx
+import { Button as MuiButton } from "@mui/material";
+
+interface ButtonProps {
+  /**
+   * How large should the button be?
+   */
+  size?: "small" | "medium" | "large";
+  /**
+   * What variant to use
+   */
+  variant?: "contained" | "outlined" | "text";
+  /**
+   * Button contents
+   */
+  label: string;
+  /**
+   * Optional click handler
+   */
+  onClick?: () => void;
+}
+
+/**
+ * Primary UI component for user interaction
+ */
+export const Button = ({
+  size = "medium",
+  variant = "contained",
+  label,
+  ...props
+}: ButtonProps) => {
+  return (
+    <MuiButton size={size} variant={variant} {...props}>
+      {label}
+    </MuiButton>
+  );
+};
+```
+
+#### Stories
+
+Agora vamos configurar o **Storybook** para enxergar nossas histórias.
+
+No arquivo `main.ts` dentro da pasta `.storybook`, adicione as linhas abaixo à propriedade `stories`.
+
+```txt
+"../packages/**/*.mdx",
+"../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+```
+
+Ficará da seguinte forma:
+
+```ts
+// main.ts
+
+stories: [
+    "../stories/**/*.mdx",
+    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    "../packages/**/*.mdx",
+    "../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+  ],
+```
+
+Agora vamos adicionar a nossa primeira história. Dentro da pasta `./packages/pacote-um/src`, crie o arquivo `Button.stories.tsx` e cole o conteúdo abaixo.
+
+```tsx
+// Button.stories.tsx
+
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { Button } from "./Button";
+
+const meta = {
+  title: "PacoteUm/Button",
+  component: Button,
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs"],
+  argTypes: {},
+} satisfies Meta<typeof Button>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Large: Story = {
+  args: {
+    size: "large",
+    label: "Button",
+    variant: "contained",
+  },
+};
+```
+
+Vamos testar nossas configurações. Inicie o storybook com o comando abaixo.
+
+```bash
+npm run storybook
+```
+
+O Storybook deve estar como na imagem abaixo, nosso Button dentro da seção `PACOTEUM`.
+
+![Stories](../images/new_stories.png)
+
+#### Testes com Jest
+
+Agora vamos configurar o Jest dentro do pacote.
+
+Adicione o arquivo de configuração do Jest ao `pacote-um` com o comando abaixo.
+
+```bash
+echo -e "import type { Config } from \"jest\";\n\nimport { default as rootConfig } from \"../../jest.config\";\n\nconst config: Config = {\n  ...rootConfig,\n};\n\nexport default config;" > ./packages/pacote-um/jest.config.ts
+```
+
+<details>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<br/>
+
+```ts
+import type { Config } from "jest";
+
+import { default as rootConfig } from "../../jest.config";
+
+const config: Config = {
+  ...rootConfig,
+};
+
+export default config;
+```
+
+</details>
+
+Crie o arquivo `Button.test.tsx` com o comando abaixo.
+
+```bash
+echo -e "import { render, cleanup, screen } from \"@testing-library/react\";\n\nimport Button from \"./Button\";\n\nimport \"@testing-library/jest-dom\";\n\ndescribe(\"Button Component\", () => {\n  afterEach(() => {\n    cleanup();\n  });\n\n  it(\"deve renderizar o Button com props padrão\", () => {\n    render(<Button label=\"Botão Padrão\" />);\n    expect(screen.getByText(\"Botão Padrão\")).toBeTruthy();\n  });\n});" > Button.test.tsx
+```
+
+<details>
+<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+
+```tsx
+import React from "react";
+
+import { render, cleanup, screen } from "@testing-library/react";
+
+import Button from "./Button";
+
+import "@testing-library/jest-dom";
+
+describe("Button Component", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it("deve renderizar o Button com props padrão", () => {
+    render(<Button label="Botão Padrão" />);
+    expect(screen.getByText("Botão Padrão")).toBeTruthy();
+  });
+});
+```
+
+</details>
+
+Agora vamos executar os testes para ver se tudo está correto. Adicione o script de teste ao `package.json` com o comando abaixo.
+
+```bash
+cd ./packages/pacote-um && npm pkg set scripts.test="jest" && cd ../..
+```
+
+Execute o teste em todos os pacotes com o comando abaixo.
+
+```bash
+npm run test
+```
+
+@TODO: TEST
