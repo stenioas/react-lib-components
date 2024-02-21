@@ -8,17 +8,16 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
 - [Git](#git)
 - [Package.json e Workspaces](#packagejson-e-workspaces)
 - [EditorConfig](#editorconfig)
-- [Dependências](#dependências)
-  - [Prettier](#prettier)
-  - [Eslint](#eslint)
-  - [Typescript](#typescript)
-  - [Jest](#jest)
-  - [Lerna](#lerna)
-  - [Husky](#husky)
-  - [Lint-staged](#lint-staged)
-  - [Commitlint](#commitlint)
-  - [React](#react)
-  - [Material UI](#material-ui)
+- [Prettier](#prettier)
+- [Eslint](#eslint)
+- [Typescript](#typescript)
+- [Jest](#jest)
+- [Lerna](#lerna)
+- [Husky](#husky)
+- [Lint-staged](#lint-staged)
+- [Commitlint](#commitlint)
+- [React](#react)
+- [Material UI](#material-ui)
 - [Commitizen](#commitizen)
 - [Criando Pacotes](#criando-pacotes)
 - [Storybook](#storybook)
@@ -35,9 +34,9 @@ Crie um diretório de sua escolha para nosso projeto. Para este guia vou criar o
 
 ### Git
 
-Inicie o repositório git caso não o tenha feito.
-
 :bulb: _O comando `git init` cria um novo repositório Git com a branch principal nomeada **master**(até a data de elaboração deste guia). Recentemente, muitos projetos e serviços, como o GitHub, mudaram o nome padrão da branch principal para **main** em resposta a considerações sobre a linguagem inclusiva. A palavra **master** pode evocar associações com a escravidão, e a mudança para **main** é um esforço para usar uma linguagem mais neutra e inclusiva na comunidade de tecnologia._
+
+Inicie o repositório git, caso não o tenha feito, com comando abaixo.
 
 ```bash
 git init -b main
@@ -45,7 +44,7 @@ git init -b main
 
 #### .gitignore
 
-Crie o arquivo `.gitignore` com o comando abaixo.
+Crie o arquivo `.gitignore` com comando abaixo.
 
 ```bash
 printf '# Dependências\nnode_modules\n\n# Diretórios de build e distribuição\ndist\nbuild\nlib\nout\n\n# Arquivos de cache do compilador e da transpilação\n.tscache\n.turbo\n\n# Logs\nnpm-debug.log*\nyarn-debug.log*\nyarn-error.log*\npnpm-debug.log*\nlerna-debug.log*\n\n# Cobertura de testes\ncoverage\n.nyc_output\n\n# Diretórios e arquivos de configuração do editor\n.vscode\n.idea\n.sublime-workspace\n.sublime-project\n\n# Outros arquivos e diretórios\n.DS_Store\nThumbs.db\n' > .gitignore
@@ -102,13 +101,11 @@ Em seguida, inicie o projeto npm dentro do diretório.
 npm init -y
 ```
 
-Vamos utilizar o [`workspaces`](https://docs.npmjs.com/cli/v7/using-npm/workspaces), então altere o arquivo `package.json`, criado anteriormente, com o comando abaixo.
+Vamos utilizar [`workspaces`](https://docs.npmjs.com/cli/v7/using-npm/workspaces), então vamos alterar o arquivo `package.json` criado anteriormente. Faça as alterações com o comando abaixo.
 
 ```bash
 printf '{\n  "name": "react-lib-components",\n  "version": "0.0.0",\n  "private": true,\n  "workspaces": ["packages/*"],\n  "description": "Monorepo template for React component library + TypeScript + Material UI + Lerna"\n}\n' > package.json
 ```
-
-A propriedade `"workspaces": ["./packages/*"]` é essencial para o fluxo correto do nosso monorepo.
 
 <details>
 <summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
@@ -185,21 +182,15 @@ indent_style = space
 
 </details>
 
-## Dependências
-
-### Prettier
+## Prettier
 
 [Prettier](https://prettier.io/) é uma ferramenta de formatação de código que suporta várias linguagens, incluindo JavaScript, CSS e HTML. Ele padroniza a formatação do código, melhorando a consistência e legibilidade. Pode ser integrado a editores de código e fluxos de trabalho de CI/CD, automatizando a formatação e garantindo um estilo de código uniforme entre os desenvolvedores.
 
-#### Deps:
-
-Instale a dependência com o comando abaixo.
+Instale a dependência.
 
 ```bash
 npm i -D prettier
 ```
-
-#### Configfile:
 
 Crie o arquivo `.prettierrc.js` com o comando abaixo.
 
@@ -224,19 +215,15 @@ module.exports = {
 
 </details>
 
-### Eslint
+## Eslint
 
 [Eslint](https://eslint.org/) é uma ferramenta de análise de código estática para identificar padrões problemáticos encontrados em código JavaScript. Ele é amplamente configurável, permitindo a personalização de regras para garantir a qualidade e consistência do código. Também é comumente usado para fazer cumprir as diretrizes de estilo de codificação, trabalhando em conjunto com ferramentas como Prettier.
-
-#### Deps:
 
 Instale as dependências com o comando abaixo.
 
 ```bash
 npm i -D eslint eslint-config-prettier eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier  eslint-plugin-react @typescript-eslint/eslint-plugin @typescript-eslint/parser
 ```
-
-#### Configfile:
 
 Crie o arquivo `.eslintrc.js` com o comando abaixo.
 
@@ -307,11 +294,9 @@ module.exports = {
 
 </details>
 
-### Typescript
+## Typescript
 
 [TypeScript](https://www.typescriptlang.org/) é uma linguagem de programação desenvolvida pela Microsoft, um superset do JavaScript, que adiciona tipagem estática opcional. Isso permite que os desenvolvedores detectem erros mais facilmente e organizem o código de forma mais eficiente, especialmente em projetos grandes.
-
-#### Deps:
 
 Instale a dependência com comando abaixo.
 
@@ -319,9 +304,7 @@ Instale a dependência com comando abaixo.
 npm i -D typescript ts-node
 ```
 
-#### Configfile:
-
-Crie o arquivo `tsconfig.json` com o comando abaixo(esta é a configuração sugerida, mas você pode utilizar a de sua preferência).
+Crie o arquivo `tsconfig.json` com o comando abaixo.
 
 ```bash
 printf '{\n  "compilerOptions": {\n    "jsx": "react-jsx",\n    "skipLibCheck": true,\n    "module": "ESNext",\n    "moduleResolution": "Node",\n    "resolveJsonModule": true,\n    "allowSyntheticDefaultImports": true,\n    "esModuleInterop": true,\n    "forceConsistentCasingInFileNames": true,\n    "isolatedModules": true,\n    "noEmit": true,\n    "strict": true,\n    "noFallthroughCasesInSwitch": true,\n    "noImplicitAny": true,\n    "noUnusedParameters": true,\n    "strictNullChecks": true\n  },\n  "exclude": ["**/.*/", "**/build", "**/node_modules"]\n}\n' > tsconfig.json
@@ -356,21 +339,17 @@ printf '{\n  "compilerOptions": {\n    "jsx": "react-jsx",\n    "skipLibCheck": 
 
 </details>
 
-Se após criar o `tsconfig.json` o editor acusar um erro, fique tranquilo, isso ocorre porque ainda não temos nenhum arquivo typescript no projeto.
+Se após criar o `tsconfig.json` o editor acusar algum erro no arquivo, fique tranquilo, isso ocorre porque ainda não temos nenhum arquivo typescript no projeto.
 
-### Jest
+## Jest
 
 [Jest](https://jestjs.io/) é uma popular ferramenta de testes para JavaScript, conhecida por sua simplicidade e suporte a testes de snapshots. Oferece uma experiência de teste integrada com funções para criar, executar e estruturar testes, além de mockar objetos. É amplamente usada em aplicações React.
-
-#### Deps:
 
 Instale as dependências com o comando abaixo.
 
 ```bash
 npm i -D jest ts-jest jest-environment-jsdom @types/jest @testing-library/react @testing-library/jest-dom
 ```
-
-#### Configfile:
 
 Crie o arquivo `jest.config.ts` com o comando abaixo.
 
@@ -397,19 +376,15 @@ export default config;
 
 </details>
 
-### Lerna
+## Lerna
 
 [Lerna](https://lerna.js.org/) é uma ferramenta de gerenciamento de projetos JavaScript que otimiza o fluxo de trabalho em monorepos. Ela facilita a manutenção de múltiplos pacotes em um único repositório, automatizando tarefas como versionamento, publicação de pacotes e gerenciamento de dependências.
-
-#### Deps:
 
 Instale a dependência com o comando abaixo.
 
 ```bash
 npm i -D lerna
 ```
-
-#### Configfile:
 
 Crie o arquivo `lerna.json` com o comando abaixo.
 
@@ -439,7 +414,7 @@ printf '{\n  "$schema": "node_modules/lerna/schemas/lerna-schema.json",\n  "vers
 
 </details>
 
-#### Scripts
+### Scripts
 
 Adicione os scripts necessários ao `package.json` com o comando abaixo.
 
@@ -447,11 +422,9 @@ Adicione os scripts necessários ao `package.json` com o comando abaixo.
 npm pkg set scripts.build="lerna run build" scripts.test="lerna run test" scripts.clean="lerna run clean --parallel" scripts.version="lerna version --yes" scripts.publish:stable="lerna publish from-package --no-private --yes" scripts.publish:canary="lerna publish --canary --no-private --no-git-tag-version --no-push --yes"
 ```
 
-### Husky
+## Husky
 
 [Husky](https://typicode.github.io/husky/) é uma ferramenta de desenvolvimento para JavaScript que facilita a gestão de ganchos Git (Git hooks). Ela permite a configuração de scripts personalizados que são executados em eventos específicos do Git, como commit ou push, ajudando a manter a qualidade e a consistência do código.
-
-#### Deps:
 
 Instale a dependência com o comando abaixo.
 
@@ -465,19 +438,15 @@ Inicialize a configuração do husky com o comando abaixo.
 npx husky init
 ```
 
-### Lint-staged
+## Lint-staged
 
 [Lint-staged](https://github.com/lint-staged/lint-staged) é uma ferramenta de desenvolvimento que executa linters em arquivos versionados pelo Git, mas que ainda não foram commitados. Ela melhora a eficiência ao focar apenas nos arquivos alterados, garantindo que o código atenda a padrões específicos antes dos commits.
-
-#### Deps:
 
 Instale as dependências com o comando abaixo.
 
 ```bash
 npm i -D lint-staged
 ```
-
-#### Configfile:
 
 Crie o arquivo `lint-staged.config.js` com o comando abaixo.
 
@@ -508,7 +477,7 @@ export default config;
 | `--report-unused-disable-directives` | Reporta as diretivas `eslint-disable` que são desnecessárias porque as regras que elas desativavam não são violadas. |
 | `--max-warnings`                     | Define o número máximo de avisos permitidos. Com `0`, até um único aviso resulta em falha de execução.               |
 
-#### Scripts
+### Scripts
 
 Altere o script do hook de pre-commit com o comando abaixo.
 
@@ -516,19 +485,15 @@ Altere o script do hook de pre-commit com o comando abaixo.
 printf "npx lint-staged" > .husky/pre-commit
 ```
 
-### Commitlint
+## Commitlint
 
 [Commitlint](https://commitlint.js.org/) é uma ferramenta de desenvolvimento que ajuda a manter a consistência dos mensagens de commit no Git. Ela verifica se as mensagens seguem um formato predefinido, baseado em convenções como [Conventional Commits](https://www.conventionalcommits.org/), aumentando a legibilidade e a organização do histórico de commits.
-
-#### Deps:
 
 Instale as dependências com o comando abaixo.
 
 ```bash
 npm i -D @commitlint/config-conventional @commitlint/cli
 ```
-
-#### Configfile:
 
 Crie o arquivo `commitlint.config.ts` com o comando abaixo.
 
@@ -560,11 +525,9 @@ Adicione o script do hook de commit-msg com o comando abaixo.
 printf "npx --no -- commitlint --edit \$1" > .husky/commit-msg
 ```
 
-### React
+## React
 
 [React](https://reactjs.org/) é uma biblioteca JavaScript de código aberto para construir interfaces de usuário. Desenvolvida pelo Facebook, é usada para criar componentes reutilizáveis e gerenciar o estado em aplicações web de uma página (SPA). React é conhecido por seu modelo de componentes declarativos e pela eficiente atualização do DOM através de um algoritmo de reconciliação, o Virtual DOM.
-
-#### Deps:
 
 Instale as dependências com o comando abaixo.
 
@@ -572,11 +535,9 @@ Instale as dependências com o comando abaixo.
 npm i -D react react-dom
 ```
 
-### Material UI
+## Material UI
 
 [Material UI](https://mui.com/) é uma biblioteca de componentes React popular que implementa o Material Design do Google. Oferece uma vasta gama de componentes UI prontos para uso, como botões, caixas de diálogo, cards, entre outros, facilitando o desenvolvimento de interfaces atrativas e funcionais. Além disso, é altamente personalizável e otimizado para acessibilidade.
-
-#### Deps:
 
 Instale as dependências com o comando abaixo.
 
@@ -587,8 +548,6 @@ npm i -D @mui/material @emotion/react @emotion/styled
 ## Commitizen
 
 [Commitizen](https://commitizen-tools.github.io/commitizen/) é uma ferramenta de linha de comando que padroniza as mensagens de commit do Git. Ele guia os desenvolvedores por um prompt de perguntas para criar um commit formatado de forma consistente e legível, facilitando a automação de versionamento e geração de changelogs. É amplamente usado em projetos que seguem as convenções de mensagens de commit, como o [Conventional Commits](https://www.conventionalcommits.org/).
-
-#### Deps:
 
 Instale globalmente com o comando abaixo.
 
