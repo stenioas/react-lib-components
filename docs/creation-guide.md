@@ -1,6 +1,6 @@
 # Guia de criação
 
-Template para monorepo de componentes React + Typescript + Material UI + Lerna + Storybook
+Template para monorepo de componentes React + Typescript + Material UI + Lerna + Jest + Storybook
 
 <details>
 <summary>Índice</summary>
@@ -20,8 +20,8 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
   - [React](#react)
   - [Material UI](#material-ui)
 - [Commitizen](#commitizen)
-- [Storybook](#storybook)
 - [Criando Pacotes](#criando-pacotes)
+- [Storybook](#storybook)
 
 </details>
 
@@ -37,13 +37,13 @@ Crie um diretório de sua escolha para nosso projeto. Para este guia vou criar o
 
 Inicie o repositório git caso não o tenha feito.
 
-:bulb: _O comando `git init` cria um novo repositório Git com a branch principal nomeada **master**. Recentemente, muitos projetos e serviços, como o GitHub, mudaram o nome padrão da branch principal para **main** em resposta a considerações sobre a linguagem inclusiva. A palavra **master** pode evocar associações com a escravidão, e a mudança para **main** é um esforço para usar uma linguagem mais neutra e inclusiva na comunidade de tecnologia._
+:bulb: _O comando `git init` cria um novo repositório Git com a branch principal nomeada **master**(até a data de elaboração deste guia). Recentemente, muitos projetos e serviços, como o GitHub, mudaram o nome padrão da branch principal para **main** em resposta a considerações sobre a linguagem inclusiva. A palavra **master** pode evocar associações com a escravidão, e a mudança para **main** é um esforço para usar uma linguagem mais neutra e inclusiva na comunidade de tecnologia._
 
 ```bash
 git init -b main
 ```
 
-#### Configfile:
+#### .gitignore
 
 Crie o arquivo `.gitignore` com o comando abaixo.
 
@@ -52,7 +52,7 @@ printf '# Dependências\nnode_modules\n\n# Diretórios de build e distribuição
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```txt
@@ -94,15 +94,13 @@ Thumbs.db
 
 </details>
 
-### Package.json e Workspaces
+### package.json e Workspaces
 
 Em seguida, inicie o projeto npm dentro do diretório.
 
 ```bash
 npm init -y
 ```
-
-#### Configfile:
 
 Vamos utilizar o [`workspaces`](https://docs.npmjs.com/cli/v7/using-npm/workspaces), então altere o arquivo `package.json`, criado anteriormente, com o comando abaixo.
 
@@ -113,7 +111,7 @@ printf '{\n  "name": "react-lib-components",\n  "version": "0.0.0",\n  "private"
 A propriedade `"workspaces": ["./packages/*"]` é essencial para o fluxo correto do nosso monorepo.
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```json
@@ -132,8 +130,6 @@ A propriedade `"workspaces": ["./packages/*"]` é essencial para o fluxo correto
 
 [Editorconfig](https://editorconfig.org/) é uma ferramenta de codificação que ajuda a manter estilos de codificação consistentes em diferentes editores e IDEs. Ele funciona através de um arquivo `.editorconfig` no repositório do projeto, definindo regras para indentação, espaços finais, conjunto de caracteres e outros estilos de código.
 
-#### Configfile:
-
 Crie o arquivo `.editorconfig` com o comando abaixo.
 
 ```bash
@@ -141,7 +137,7 @@ printf '# http://editorconfig.org\n\n# top-most EditorConfig file\nroot = true\n
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```yml
@@ -212,7 +208,7 @@ printf 'module.exports = {\n  arrowParens: "always",\n  useTabs: false,\n  print
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```js
@@ -249,7 +245,7 @@ printf 'module.exports = {\n  env: {\n    browser: true,\n    es2020: true,\n   
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```js
@@ -332,7 +328,7 @@ printf '{\n  "compilerOptions": {\n    "jsx": "react-jsx",\n    "skipLibCheck": 
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```json
@@ -383,7 +379,7 @@ printf 'import type { Config } from "jest";\n\nconst config: Config = {\n  verbo
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```ts
@@ -424,7 +420,7 @@ printf '{\n  "$schema": "node_modules/lerna/schemas/lerna-schema.json",\n  "vers
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```json
@@ -490,7 +486,7 @@ printf 'const config = {\n  "*.{js,jsx,ts,tsx,json,md}": ["prettier --write"],\n
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```js
@@ -541,7 +537,7 @@ printf 'import type { UserConfig } from "@commitlint/types";\n\nconst Configurat
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```ts
@@ -645,7 +641,7 @@ printf '{\n  "name": "@react-lib-components/pacote-um",\n  "version": "0.0.1",\n
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```json
@@ -668,7 +664,7 @@ printf '{\n  "extends": "../../tsconfig.json",\n  "compilerOptions": {\n    "mod
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```json
@@ -757,7 +753,7 @@ printf 'import { Typography as MuiTypography } from "@mui/material";\n\nexport i
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```tsx
@@ -793,7 +789,7 @@ printf 'export { default as Typography } from "./Typography";\nexport * from "./
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```ts
@@ -812,7 +808,7 @@ printf 'import type { Config } from "jest";\n\nimport { default as rootConfig } 
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```ts
@@ -836,7 +832,7 @@ printf 'import React from "react";\n\nimport { render, screen } from "@testing-l
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```tsx
@@ -887,7 +883,7 @@ printf '{\n  "name": "@react-lib-components/pacote-dois",\n  "version": "0.0.1",
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```json
@@ -910,7 +906,7 @@ printf '{\n  "extends": "../../tsconfig.json",\n  "compilerOptions": {\n    "com
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```json
@@ -1002,7 +998,7 @@ printf 'import { Button as MuiButton } from "@mui/material";\nimport { Typograph
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```tsx
@@ -1058,7 +1054,7 @@ printf 'import type { Config } from "jest";\n\nimport { default as rootConfig } 
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```ts
@@ -1082,7 +1078,7 @@ printf 'import React from "react";\n\nimport { render, cleanup, screen } from "@
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```tsx
@@ -1234,7 +1230,7 @@ printf 'import type { Meta, StoryObj } from "@storybook/react";\n\nimport Button
 ```
 
 <details>
-<summary>Clique para ver o conteúdo adicionado ao arquivo.</summary>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
 <br />
 
 ```tsx
