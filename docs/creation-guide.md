@@ -618,7 +618,7 @@ printf '{\n  "extends": "../../tsconfig.json",\n  "compilerOptions": {\n    "mod
 
 </details>
 
-Atualmente, a estrutura de arquivos do nosso projeto deve estar igual ao formato abaixo.
+Atualmente, a estrutura de arquivos do nosso projeto deve estar como abaixo.
 
 ```txt
 .
@@ -631,11 +631,11 @@ Atualmente, a estrutura de arquivos do nosso projeto deve estar igual ao formato
 ├─.editorconfig
 ├─.eslintrc.js
 ├─.gitignore
+├─.lintstagedrc.js
 ├─.prettierrc.js
 ├─commitlint.config.ts
 ├─jest.config.ts
 ├─lerna.json
-├─lint-staged.config.js
 ├─package-lock.json
 ├─package.json
 └─tsconfig.json
@@ -643,10 +643,12 @@ Atualmente, a estrutura de arquivos do nosso projeto deve estar igual ao formato
 
 #### Componente Um
 
+É possível ter vários componentes dentro de um único pacote, a escolha depende muito da necessidade do projeto. Para este guia vamos criar um único componente simples dentro do nosso pacote.
+
 Instale o React e o Material UI como devDependencies do nosso pacote.
 
 ```bash
-cd ./packages/pacote-um && npm i -D react react-dom @mui/material @emotion/react @emotion/styled && cd ../..
+npm i && cd ./packages/pacote-um && npm i -D react react-dom @mui/material @emotion/react @emotion/styled && cd ../..
 ```
 
 As peerDependencies garantem que o pacote consumidor tenha instalado as dependências corretas de que o pacote necessita para funcionar, sem forçar versões múltiplas das mesmas bibliotecas. Isso é vital para evitar conflitos de versão e inchaço desnecessário do node_modules. Após instalar as dependências, altere a propriedade `devDependencies` no `package.json` para `peerDependencies`, ficando como abaixo.
@@ -669,9 +671,7 @@ As peerDependencies garantem que o pacote consumidor tenha instalado as dependê
 }
 ```
 
-É possível ter vários componentes dentro de um único pacote, a escolha depende muito da necessidade do projeto. Para este guia vamos criar um único componente simples dentro do nosso pacote.
-
-Crie uma pasta `src` na pasta `pacote-um` para armazenar todo o código fonte do nosso pacote.
+Crie uma pasta `src` dentro da pasta `pacote-um` para armazenar todo o código fonte do nosso pacote.
 
 ```bash
 mkdir ./packages/pacote-um/src
@@ -680,7 +680,7 @@ mkdir ./packages/pacote-um/src
 Dentro da pasta `./packages/pacote-um/src`, crie o arquivo `Typography.tsx` com o comando abaixo.
 
 ```bash
-printf 'import { Typography as MuiTypography } from "@mui/material";\n\nexport interface TypographyProps {\n  /**\n   * Typography contents\n   */\n  label: string;\n  /**\n   * Optional click handler\n   */\n  onClick?: () => void;\n}\n\n/**\n * Typography Component for user interaction\n */\nconst Typography = ({ label, ...props }: TypographyProps) => {\n  return <MuiTypography {...props}>{label}</MuiTypography>;\n};\n\nexport default Typography;\n' > ./packages/pacote-um/src/Typography
+printf 'import { Typography as MuiTypography } from "@mui/material";\n\nexport interface TypographyProps {\n  /**\n   * Typography contents\n   */\n  label: string;\n  /**\n   * Optional click handler\n   */\n  onClick?: () => void;\n}\n\n/**\n * Typography Component for user interaction\n */\nconst Typography = ({ label, ...props }: TypographyProps) => {\n  return <MuiTypography {...props}>{label}</MuiTypography>;\n};\n\nexport default Typography;\n' > ./packages/pacote-um/src/Typography.tsx
 ```
 
 <details>
@@ -713,7 +713,7 @@ export default Typography;
 
 </details>
 
-Crie o arquivo `index.ts`, dentro da pasta **src**, para centralizar as exportações do nosso pacote.
+Crie o arquivo `index.ts`, dentro da pasta `src`, para centralizar as exportações do nosso pacote.
 
 ```bash
 printf 'export { default as Typography } from "./Typography";\nexport * from "./Typography";\n' > ./packages/pacote-um/src/index.ts
@@ -793,7 +793,7 @@ cd ./packages/pacote-um && npm pkg set scripts.test="jest" && cd ../..
 
 ### Pacote Dois
 
-Tudo certo até aqui! Agora vamos criar outro pacote e integrar os componentes entre si, estando em pacotes diferentes. Os passos são semelhantes aos do **pacote-um**.
+Agora vamos criar outro pacote e integrar os componentes entre si. Os passos são semelhantes aos do **pacote-um**.
 
 Dentro da pasta `packages`, crie um novo diretório para o nosso pacote. Para este guia vou criar o diretório `pacote-dois`.
 
@@ -860,7 +860,7 @@ printf '{\n  "extends": "../../tsconfig.json",\n  "compilerOptions": {\n    "com
 
 </details>
 
-Atualmente, a estrutura de arquivos do nosso projeto deve estar igual ao formato abaixo.
+Atualmente, a estrutura de arquivos do nosso projeto deve estar como abaixo.
 
 ```txt
 .
@@ -878,11 +878,11 @@ Atualmente, a estrutura de arquivos do nosso projeto deve estar igual ao formato
 ├─.editorconfig
 ├─.eslintrc.js
 ├─.gitignore
+├─.lintstagedrc.js
 ├─.prettierrc.js
 ├─commitlint.config.ts
 ├─jest.config.ts
 ├─lerna.json
-├─lint-staged.config.js
 ├─package-lock.json
 ├─package.json
 └─tsconfig.json
@@ -893,7 +893,7 @@ Atualmente, a estrutura de arquivos do nosso projeto deve estar igual ao formato
 Instale o React e o Material UI como devDependencies do nosso pacote.
 
 ```bash
-cd ./packages/pacote-dois && npm i -D react react-dom @mui/material @emotion/react @emotion/styled && cd ../..
+npm i && cd ./packages/pacote-dois && npm i -D react react-dom @mui/material @emotion/react @emotion/styled && cd ../..
 ```
 
 Altere a propriedade `devDependencies` no `package.json` para `peerDependencies`, ficando como abaixo.
@@ -978,10 +978,10 @@ export default Button;
 
 #### Testes com Jest
 
-Agora vamos configurar o Jest dentro do pacote. Adicione o arquivo de configuração do Jest ao `pacote-um` com o comando abaixo.
+Agora vamos configurar o Jest dentro do pacote. Adicione o arquivo de configuração do Jest ao `pacote-dois` com o comando abaixo.
 
 ```bash
-printf 'import type { Config } from "jest";\n\nimport { default as rootConfig } from "../../jest.config";\n\nconst config: Config = {\n  ...rootConfig,\n};\n\nexport default config;\n' > ./packages/pacote-um/jest.config.ts
+printf 'import type { Config } from "jest";\n\nimport { default as rootConfig } from "../../jest.config";\n\nconst config: Config = {\n  ...rootConfig,\n};\n\nexport default config;\n' > ./packages/pacote-dois/jest.config.ts
 ```
 
 <details>
@@ -1064,7 +1064,7 @@ Agora vamos configurar o nosso monorepo para integrar os pacotes entre si. Adici
 }
 ```
 
-Adicione também a propriedade **"composite": true** ao `tsconfig.json` de ambos os pacotes, necessário para fazermos uso de referências.
+Adicione também a propriedade **"composite": true** ao `tsconfig.json` de ambos os pacotes, necessário para fazermos uso das referências.
 
 ```json
 {
