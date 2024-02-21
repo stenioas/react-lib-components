@@ -426,16 +426,10 @@ npm pkg set scripts.build="lerna run build" scripts.test="lerna run test" script
 
 [Husky](https://typicode.github.io/husky/) é uma ferramenta de desenvolvimento para JavaScript que facilita a gestão de ganchos Git (Git hooks). Ela permite a configuração de scripts personalizados que são executados em eventos específicos do Git, como commit ou push, ajudando a manter a qualidade e a consistência do código.
 
-Instale a dependência com o comando abaixo.
+Instale a dependência e inicialize a configuração do husky com o comando abaixo.
 
 ```bash
-npm i -D husky
-```
-
-Inicialize a configuração do husky com o comando abaixo.
-
-```bash
-npx husky init
+npm i -D husky && npx husky init
 ```
 
 ## Lint-staged
@@ -448,10 +442,10 @@ Instale as dependências com o comando abaixo.
 npm i -D lint-staged
 ```
 
-Crie o arquivo `lint-staged.config.js` com o comando abaixo.
+Crie o arquivo `.lintstagedrc.js` com o comando abaixo.
 
 ```bash
-printf 'const config = {\n  "*.{js,jsx,ts,tsx,json,md}": ["prettier --write"],\n  "*.{js,jsx,ts,tsx}": [\n    "eslint --fix --report-unused-disable-directives --max-warnings 0",\n  ],\n};\n\nexport default config;\n' > lint-staged.config.js
+printf 'const config = {\n  "*.{js,jsx,ts,tsx,json,md}": ["prettier --write"],\n  "*.{js,jsx,ts,tsx}": [\n    "eslint --fix --report-unused-disable-directives --max-warnings 0",\n  ],\n};\n\nexport default config;\n' > .lintstagedrc.js
 ```
 
 <details>
@@ -487,7 +481,7 @@ printf "npx lint-staged" > .husky/pre-commit
 
 ## Commitlint
 
-[Commitlint](https://commitlint.js.org/) é uma ferramenta de desenvolvimento que ajuda a manter a consistência dos mensagens de commit no Git. Ela verifica se as mensagens seguem um formato predefinido, baseado em convenções como [Conventional Commits](https://www.conventionalcommits.org/), aumentando a legibilidade e a organização do histórico de commits.
+[Commitlint](https://commitlint.js.org/) é uma ferramenta de desenvolvimento que ajuda a manter a consistência das mensagens de commit no Git. Ela verifica se as mensagens seguem um formato predefinido, baseado em convenções como [Conventional Commits](https://www.conventionalcommits.org/), aumentando a legibilidade e a organização do histórico de commits.
 
 Instale as dependências com o comando abaixo.
 
@@ -544,28 +538,6 @@ Instale as dependências com o comando abaixo.
 ```bash
 npm i -D @mui/material @emotion/react @emotion/styled
 ```
-
-## Commitizen
-
-[Commitizen](https://commitizen-tools.github.io/commitizen/) é uma ferramenta de linha de comando que padroniza as mensagens de commit do Git. Ele guia os desenvolvedores por um prompt de perguntas para criar um commit formatado de forma consistente e legível, facilitando a automação de versionamento e geração de changelogs. É amplamente usado em projetos que seguem as convenções de mensagens de commit, como o [Conventional Commits](https://www.conventionalcommits.org/).
-
-Instale globalmente com o comando abaixo.
-
-```bash
-npm i -g commitizen
-```
-
-Inicialize a configuração do Commitizen com o comando abaixo.
-
-```bash
-npx commitizen init cz-conventional-changelog --npm --save-dev --exact
-```
-
-| Flag         | Descrição                                                                                                                              |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `--npm`      | Especifica que o NPM deve ser usado para instalar o adaptador. Útil em ambientes com múltiplos gerenciadores de pacotes.               |
-| `--save-dev` | Adiciona o adaptador como uma dependência de desenvolvimento no arquivo `package.json`. Não será incluído em produção.                 |
-| `--exact`    | Garante a instalação da versão exata do adaptador, sem usar range de versões, para consistência entre os ambientes de desenvolvimento. |
 
 ## Criando Pacotes
 
@@ -1231,8 +1203,26 @@ O Storybook deve estar como na imagem abaixo, nosso Button dentro da seção `PA
 
 ![Stories](../images/new_stories.png)
 
-Perfeito! Agora
+## Commitizen
 
+:bulb: _Etapa opcional!_
+
+[Commitizen](https://commitizen-tools.github.io/commitizen/) é uma ferramenta de linha de comando que padroniza as mensagens de commit do Git. Ele guia os desenvolvedores por um prompt de perguntas para criar um commit formatado de forma consistente e legível, facilitando a automação de versionamento e geração de changelogs. É amplamente usado em projetos que seguem as convenções de mensagens de commit, como o [Conventional Commits](https://www.conventionalcommits.org/).
+
+Instale globalmente com o comando abaixo.
+
+```bash
+npm i -g commitizen
 ```
 
+Inicialize a configuração do Commitizen com o comando abaixo.
+
+```bash
+npx commitizen init cz-conventional-changelog --npm --save-dev --exact
 ```
+
+| Flag         | Descrição                                                                                                                              |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `--npm`      | Especifica que o NPM deve ser usado para instalar o adaptador. Útil em ambientes com múltiplos gerenciadores de pacotes.               |
+| `--save-dev` | Adiciona o adaptador como uma dependência de desenvolvimento no arquivo `package.json`. Não será incluído em produção.                 |
+| `--exact`    | Garante a instalação da versão exata do adaptador, sem usar range de versões, para consistência entre os ambientes de desenvolvimento. |
