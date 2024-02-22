@@ -26,11 +26,11 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
 
 </details>
 
+## Começando
+
 :warning: **_Neste guia não entrarei em detalhes sobre propriedades dos arquivos de configuração, comandos e afins, para saber mais sobre isso acesse a documentação de cada ferramenta utilizada._**
 
 :warning: **_Todos os comandos deste guia devem ser executados na raiz do projeto._**
-
-## Começando
 
 Crie um diretório de sua escolha para nosso projeto. Para este guia vou criar o diretório `react-lib-components`.
 
