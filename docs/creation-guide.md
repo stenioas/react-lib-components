@@ -1005,7 +1005,7 @@ export default config;
 Crie o arquivo `Button.test.tsx` com o comando abaixo.
 
 ```bash
-printf 'import React from "react";\n\nimport { render, cleanup, screen } from "@testing-library/react";\n\nimport Button from "./Button";\n\nimport "@testing-library/jest-dom";\n\ndescribe("Button Component", () => {\n  afterEach(() => {\n    cleanup();\n  });\n\n  it("deve renderizar o Button com props padrão", () => {\n    render(<Button label="Botão Padrão" />);\n    expect(screen.getByText("Botão Padrão")).toBeTruthy();\n  });\n});\n' > ./packages/pacote-um/src/Button.test.tsx
+printf 'import React from "react";\n\nimport { render, cleanup, screen } from "@testing-library/react";\n\nimport Button from "./Button";\n\nimport "@testing-library/jest-dom";\n\ndescribe("Button Component", () => {\n  afterEach(() => {\n    cleanup();\n  });\n\n  it("deve renderizar o Button com props padrão", () => {\n    render(<Button label="Botão Padrão" />);\n    expect(screen.getByText("Botão Padrão")).toBeTruthy();\n  });\n});\n' > ./packages/pacote-dois/src/Button.test.tsx
 ```
 
 <details>
