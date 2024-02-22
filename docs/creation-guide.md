@@ -5,22 +5,24 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
 <details>
 <summary>Índice</summary>
 
-- [Git](#git)
-- [Package.json e Workspaces](#packagejson-e-workspaces)
-- [EditorConfig](#editorconfig)
-- [Prettier](#prettier)
-- [Eslint](#eslint)
-- [Typescript](#typescript)
-- [Jest](#jest)
-- [Lerna](#lerna)
-- [Husky](#husky)
-- [Lint-staged](#lint-staged)
-- [Commitlint](#commitlint)
-- [React](#react)
+- [Começando](#comecando)
+  - [Git](#git)
+  - [Package.json e Workspaces](#packagejson-e-workspaces)
+  - [EditorConfig](#editorconfig)
+- [Dependências](#dependencias)
+  - [Prettier](#prettier)
+  - [Eslint](#eslint)
+  - [Typescript](#typescript)
+  - [Jest](#jest)
+  - [Lerna](#lerna)
+  - [Husky](#husky)
+  - [Lint-staged](#lint-staged)
+  - [Commitlint](#commitlint)
+  - [React](#react)
 - [Material UI](#material-ui)
-- [Commitizen](#commitizen)
 - [Criando Pacotes](#criando-pacotes)
 - [Storybook](#storybook)
+- [Commitizen](#commitizen)
 
 </details>
 
@@ -28,7 +30,7 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
 
 :warning: **_Todos os comandos deste guia devem ser executados na raiz do projeto._**
 
-## Getting started
+## Começando
 
 Crie um diretório de sua escolha para nosso projeto. Para este guia vou criar o diretório `react-lib-components`.
 
@@ -123,7 +125,7 @@ printf '{\n  "name": "react-lib-components",\n  "version": "0.0.0",\n  "private"
 
 </details>
 
-## Editorconfig
+### Editorconfig
 
 [Editorconfig](https://editorconfig.org/) é uma ferramenta de codificação que ajuda a manter estilos de codificação consistentes em diferentes editores e IDEs. Ele funciona através de um arquivo `.editorconfig` no repositório do projeto, definindo regras para indentação, espaços finais, conjunto de caracteres e outros estilos de código.
 
@@ -182,7 +184,9 @@ indent_style = space
 
 </details>
 
-## Prettier
+## Dependências
+
+### Prettier
 
 [Prettier](https://prettier.io/) é uma ferramenta de formatação de código que suporta várias linguagens, incluindo JavaScript, CSS e HTML. Ele padroniza a formatação do código, melhorando a consistência e legibilidade. Pode ser integrado a editores de código e fluxos de trabalho de CI/CD, automatizando a formatação e garantindo um estilo de código uniforme entre os desenvolvedores.
 
@@ -215,7 +219,7 @@ module.exports = {
 
 </details>
 
-## Eslint
+### Eslint
 
 [Eslint](https://eslint.org/) é uma ferramenta de análise de código estática para identificar padrões problemáticos encontrados em código JavaScript. Ele é amplamente configurável, permitindo a personalização de regras para garantir a qualidade e consistência do código. Também é comumente usado para fazer cumprir as diretrizes de estilo de codificação, trabalhando em conjunto com ferramentas como Prettier.
 
@@ -294,7 +298,7 @@ module.exports = {
 
 </details>
 
-## Typescript
+### Typescript
 
 [TypeScript](https://www.typescriptlang.org/) é uma linguagem de programação desenvolvida pela Microsoft, um superset do JavaScript, que adiciona tipagem estática opcional. Isso permite que os desenvolvedores detectem erros mais facilmente e organizem o código de forma mais eficiente, especialmente em projetos grandes.
 
@@ -341,7 +345,7 @@ printf '{\n  "compilerOptions": {\n    "jsx": "react-jsx",\n    "skipLibCheck": 
 
 Se após criar o `tsconfig.json` o editor acusar algum erro no arquivo, fique tranquilo, isso ocorre porque ainda não temos nenhum arquivo typescript no projeto.
 
-## Jest
+### Jest
 
 [Jest](https://jestjs.io/) é uma popular ferramenta de testes para JavaScript, conhecida por sua simplicidade e suporte a testes de snapshots. Oferece uma experiência de teste integrada com funções para criar, executar e estruturar testes, além de mockar objetos. É amplamente usada em aplicações React.
 
@@ -376,7 +380,7 @@ export default config;
 
 </details>
 
-## Lerna
+### Lerna
 
 [Lerna](https://lerna.js.org/) é uma ferramenta de gerenciamento de projetos JavaScript que otimiza o fluxo de trabalho em monorepos. Ela facilita a manutenção de múltiplos pacotes em um único repositório, automatizando tarefas como versionamento, publicação de pacotes e gerenciamento de dependências.
 
@@ -414,7 +418,7 @@ printf '{\n  "$schema": "node_modules/lerna/schemas/lerna-schema.json",\n  "vers
 
 </details>
 
-### Scripts
+#### Scripts
 
 Adicione os scripts necessários ao `package.json` com o comando abaixo.
 
@@ -422,7 +426,7 @@ Adicione os scripts necessários ao `package.json` com o comando abaixo.
 npm pkg set scripts.build="lerna run build" scripts.test="lerna run test" scripts.clean="lerna run clean --parallel" scripts.version="lerna version --yes" scripts.publish:stable="lerna publish from-package --no-private --yes" scripts.publish:canary="lerna publish --canary --no-private --no-git-tag-version --no-push --yes"
 ```
 
-## Husky
+### Husky
 
 [Husky](https://typicode.github.io/husky/) é uma ferramenta de desenvolvimento para JavaScript que facilita a gestão de ganchos Git (Git hooks). Ela permite a configuração de scripts personalizados que são executados em eventos específicos do Git, como commit ou push, ajudando a manter a qualidade e a consistência do código.
 
@@ -432,7 +436,7 @@ Instale a dependência e inicialize a configuração do husky com o comando abai
 npm i -D husky && npx husky init
 ```
 
-## Lint-staged
+### Lint-staged
 
 [Lint-staged](https://github.com/lint-staged/lint-staged) é uma ferramenta de desenvolvimento que executa linters em arquivos versionados pelo Git, mas que ainda não foram commitados. Ela melhora a eficiência ao focar apenas nos arquivos alterados, garantindo que o código atenda a padrões específicos antes dos commits.
 
@@ -471,7 +475,7 @@ export default config;
 | `--report-unused-disable-directives` | Reporta as diretivas `eslint-disable` que são desnecessárias porque as regras que elas desativavam não são violadas. |
 | `--max-warnings`                     | Define o número máximo de avisos permitidos. Com `0`, até um único aviso resulta em falha de execução.               |
 
-### Scripts
+#### Scripts
 
 Altere o script do hook de pre-commit com o comando abaixo.
 
@@ -479,7 +483,7 @@ Altere o script do hook de pre-commit com o comando abaixo.
 printf "npx lint-staged" > .husky/pre-commit
 ```
 
-## Commitlint
+### Commitlint
 
 [Commitlint](https://commitlint.js.org/) é uma ferramenta de desenvolvimento que ajuda a manter a consistência das mensagens de commit no Git. Ela verifica se as mensagens seguem um formato predefinido, baseado em convenções como [Conventional Commits](https://www.conventionalcommits.org/), aumentando a legibilidade e a organização do histórico de commits.
 
@@ -519,7 +523,7 @@ Adicione o script do hook de commit-msg com o comando abaixo.
 printf "npx --no -- commitlint --edit \$1" > .husky/commit-msg
 ```
 
-## React
+### React
 
 [React](https://reactjs.org/) é uma biblioteca JavaScript de código aberto para construir interfaces de usuário. Desenvolvida pelo Facebook, é usada para criar componentes reutilizáveis e gerenciar o estado em aplicações web de uma página (SPA). React é conhecido por seu modelo de componentes declarativos e pela eficiente atualização do DOM através de um algoritmo de reconciliação, o Virtual DOM.
 
@@ -529,7 +533,7 @@ Instale as dependências com o comando abaixo.
 npm i -D react react-dom
 ```
 
-## Material UI
+### Material UI
 
 [Material UI](https://mui.com/) é uma biblioteca de componentes React popular que implementa o Material Design do Google. Oferece uma vasta gama de componentes UI prontos para uso, como botões, caixas de diálogo, cards, entre outros, facilitando o desenvolvimento de interfaces atrativas e funcionais. Além disso, é altamente personalizável e otimizado para acessibilidade.
 
@@ -1147,7 +1151,7 @@ Após instalado, o Storybook vai iniciar automaticamente, vamos dar um `Ctrl + C
 Vamos configurar o **Storybook** para enxergar nossas histórias nas pastas do nosso **Workspace**, e adicionar o mapeamento dos pacotes com o comando abaixo.
 
 ```bash
-printf 'import type { StorybookConfig } from "@storybook/react-vite";\nimport type { UserConfig } from "vite";\n\nimport path, { join, dirname } from "path";\n\n/**\n * This function is used to resolve the absolute path of a package.\n * It is needed in projects that use Yarn PnP or are set up within a monorepo.\n */\nfunction getAbsolutePath(value: string): any {\n  return dirname(require.resolve(join(value, "package.json")));\n}\nconst config: StorybookConfig = {\n  stories: [\n    "../stories/**/*.mdx",\n    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",\n    "../packages/**/*.mdx",\n    "../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",\n  ],\n  addons: [\n    getAbsolutePath("@storybook/addon-links"),\n    getAbsolutePath("@storybook/addon-essentials"),\n    getAbsolutePath("@storybook/addon-onboarding"),\n    getAbsolutePath("@storybook/addon-interactions"),\n  ],\n  framework: {\n    name: getAbsolutePath("@storybook/react-vite"),\n    options: {},\n  },\n  docs: {\n    autodocs: "tag",\n  },\n  async viteFinal(config: UserConfig) {\n    // Garantir que config.resolve e config.resolve.alias existam\n    config.resolve = config.resolve || {};\n    config.resolve.alias = config.resolve.alias || {};\n\n    config.resolve.alias = {\n      ...config.resolve.alias,\n      "@react-lib-components/pacote-um": path.resolve(\n        __dirname,\n        "../packages/pacote-um/src",\n      ),\n      "@react-lib-components/pacote-dois": path.resolve(\n        __dirname,\n        "../packages/pacote-dois/src",\n      ),\n    };\n\n    return config;\n  },\n};\n\nexport default config;\n' > ./.storybook/main.ts
+printf 'import type { StorybookConfig } from "@storybook/react-vite";\nimport type { UserConfig } from "vite";\n\nimport path, { join, dirname } from "path";\n\n/**\n * This function is used to resolve the absolute path of a package.\n * It is needed in projects that use Yarn PnP or are set up within a monorepo.\n */\nfunction getAbsolutePath(value: string): any {\n  return dirname(require.resolve(join(value, "package.json")));\n}\nconst config: StorybookConfig = {\n  stories: [\n    "../stories/**/*.mdx",\n    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",\n    "../packages/**/*.mdx",\n    "../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",\n  ],\n  addons: [\n    getAbsolutePath("@storybook/addon-links"),\n    getAbsolutePath("@storybook/addon-essentials"),\n    getAbsolutePath("@storybook/addon-onboarding"),\n    getAbsolutePath("@storybook/addon-interactions"),\n  ],\n  framework: {\n    name: getAbsolutePath("@storybook/react-vite"),\n    options: {},\n  },\n  docs: {\n    autodocs: "tag",\n  },\n  async viteFinal(config: UserConfig) {\n    /**\n     * Ensures that config.resolve and config.resolve.alias exist\n     */\n    config.resolve = config.resolve || {};\n    config.resolve.alias = config.resolve.alias || {};\n\n    config.resolve.alias = {\n      ...config.resolve.alias,\n      "@react-lib-components/pacote-um": path.resolve(\n        __dirname,\n        "../packages/pacote-um/src",\n      ),\n      "@react-lib-components/pacote-dois": path.resolve(\n        __dirname,\n        "../packages/pacote-dois/src",\n      ),\n    };\n\n    return config;\n  },\n};\n\nexport default config;\n' > ./.storybook/main.ts
 ```
 
 <details>
@@ -1188,7 +1192,9 @@ const config: StorybookConfig = {
     autodocs: "tag",
   },
   async viteFinal(config: UserConfig) {
-    // Garantir que config.resolve e config.resolve.alias existam
+    /**
+     * Ensures that config.resolve and config.resolve.alias exist
+     */
     config.resolve = config.resolve || {};
     config.resolve.alias = config.resolve.alias || {};
 
