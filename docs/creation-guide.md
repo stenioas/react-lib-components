@@ -19,10 +19,17 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
   - [Lint-staged](#lint-staged)
   - [Commitlint](#commitlint)
   - [React](#react)
-- [Material UI](#material-ui)
+  - [Material UI](#material-ui)
 - [Criando Pacotes](#criando-pacotes)
+  - [Estrutura dos pacotes](#estrutura-dos-pacotes)
+  - [Pacote Um](#pacote-um)
+  - [Pacote Dois](#pacote-dois)
+  - [Integração dos pacotes](#integração-entre-pacotes)
+  - [Executando os testes](#executando-os-testes)
+  - TODO: Publicando pacotes
 - [Storybook](#storybook)
-- [Commitizen](#commitizen)
+  - [Stories](#stories)
+- [Commitizen (Opcional)](#commitizen-opcional)
 
 </details>
 
@@ -1135,6 +1142,8 @@ Agora vamos executar os testes para ver se tudo está funcionando corretamente c
 ```bash
 npm run test
 ```
+
+### @TODO: Publicando pacotes
 
 ## Storybook
 
