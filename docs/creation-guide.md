@@ -5,7 +5,7 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
 <details>
 <summary>Índice</summary>
 
-- [Começando](#comecando)
+- [Começando](#começando)
   - [Git](#git)
   - [Package.json e Workspaces](#packagejson-e-workspaces)
   - [EditorConfig](#editorconfig)
