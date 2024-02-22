@@ -591,7 +591,7 @@ printf '{\n  "name": "@react-lib-components/pacote-um",\n  "version": "0.0.1",\n
 Agora crie o arquivo `tsconfig.json` específico para o **pacote-um**.
 
 ```bash
-printf '{\n  "extends": "../../tsconfig.json",\n  "compilerOptions": {\n    "module": "esnext",\n    "target": "es5",\n    "lib": ["DOM", "DOM.Iterable", "ESNext"],\n    "allowJs": true,\n    "declaration": true,\n    "noEmit": false,\n    "outDir": "build",\n    "rootDir": "./src"\n  },\n  "include": ["src/**/*"],\n  "exclude": ["**/*.stories.ts*", "**/*.test.ts*", "**/*.spec.ts*"]\n}\n' > ./packages/pacote-um/tsconfig.json
+printf '{\n  "extends": "../../tsconfig.json",\n  "compilerOptions": {\n    "composite": true,\n    "module": "esnext",\n    "target": "es5",\n    "lib": ["DOM", "DOM.Iterable", "ESNext"],\n    "allowJs": true,\n    "declaration": true,\n    "noEmit": false,\n    "outDir": "build",\n    "rootDir": "./src"\n  },\n  "include": ["src/**/*"],\n  "exclude": ["**/*.stories.ts*", "**/*.test.ts*", "**/*.spec.ts*"]\n}\n' > ./packages/pacote-um/tsconfig.json
 ```
 
 <details>
@@ -602,6 +602,7 @@ printf '{\n  "extends": "../../tsconfig.json",\n  "compilerOptions": {\n    "mod
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "module": "esnext",
     "target": "es5",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -844,6 +845,7 @@ printf '{\n  "extends": "../../tsconfig.json",\n  "compilerOptions": {\n    "com
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "module": "esnext",
     "target": "es5",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -1043,7 +1045,7 @@ cd ./packages/pacote-dois && npm pkg set scripts.test="jest" && cd ../..
 
 ### Integração entre Pacotes
 
-O componente `Button`(pacote-dois), que acabamos de criar, utiliza o componente `Typography`(pacote-um) dentro da sua estrutura, então precisamos adicionar o **pacote-um** como dependência do **pacote-dois** para garantir o funcionamento correto dos componentes.
+O componente `Button`(pacote-dois), que acabamos de criar, utiliza o componente `Typography`(pacote-um) dentro da sua estrutura, então precisamos adicionar o **pacote-um** como dependência do **pacote-dois**, para garantir o funcionamento correto dos componentes.
 
 ```bash
 cd ./packages/pacote-dois && npm i @react-lib-components/pacote-um && cd ../..
@@ -1054,26 +1056,27 @@ Agora vamos configurar o nosso monorepo para integrar os pacotes entre si. Adici
 ```json
 {
   "compilerOptions": {
-    // ...
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@react-lib-components/*/": ["packages/*/src"]
+      "@react-lib-components/*": ["packages/*/src"]
     }
-    // ...
-  }
-}
-```
-
-Adicione também a propriedade **"composite": true** ao `tsconfig.json` de ambos os pacotes, necessário para fazermos uso das referências.
-
-```json
-{
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "composite": true
-    // ...
-  }
-  // ...
+  },
+  "exclude": ["**/.*/", "**/build", "**/node_modules"]
 }
 ```
 
@@ -1083,9 +1086,18 @@ Agora adicione ao `tsconfig.json` do **pacote-dois** a referência ao **pacote-u
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    // ...
+    "composite": true,
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "declaration": true,
+    "noEmit": false,
+    "outDir": "build",
+    "rootDir": "./src"
   },
-  // ...
+  "include": ["src/**/*"],
+  "exclude": ["**/*.stories.ts*", "**/*.test.ts*", "**/*.spec.ts*"],
   "references": [
     {
       "path": "../pacote-um/tsconfig.json"
@@ -1094,7 +1106,7 @@ Agora adicione ao `tsconfig.json` do **pacote-dois** a referência ao **pacote-u
 }
 ```
 
-Precisamos adicionar um mapeamento para que o Jest consiga resolver as importações e dependências entre os pacotes. Adicione a propriedade `moduleNameMapper` ao arquivo `jest.config.ts` do **pacote-dois** conforme abaixo.
+Precisamos também adicionar um mapeamento para que o Jest consiga resolver as importações e dependências entre os pacotes. Adicione a propriedade `moduleNameMapper` ao arquivo `jest.config.ts` do **pacote-dois** conforme abaixo.
 
 ```ts
 import type { Config } from "jest";
@@ -1124,40 +1136,89 @@ npm run test
 
 [Storybook](https://storybook.js.org/) é uma ferramenta de desenvolvimento de interface do usuário (UI) para componentes de front-end. Ela permite aos desenvolvedores criar e visualizar componentes de UI isoladamente, facilitando o desenvolvimento e teste. Suporta frameworks como React, Vue, Angular e outros, tornando-se uma escolha popular para a documentação de componentes e construção de bibliotecas de design.
 
-#### Deps:
-
-Inicialize a configuração do Storybook para React jutamente com o builder do vite. :coffee: Pega um café que essa etapa demora um pouquinho.
+Inicialize a configuração do Storybook para React, jutamente com o builder do vite. :coffee: Pega um café que essa etapa demora um pouquinho.
 
 ```bash
 npx storybook@latest init --builder vite --yes
 ```
 
-#### Stories
+Após instalado, o Storybook vai iniciar automaticamente, vamos dar um `Ctrl + C` para interromper a execussão por enquanto.
 
-Agora vamos configurar o **Storybook** para enxergar nossas histórias.
+Vamos configurar o **Storybook** para enxergar nossas histórias nas pastas do nosso **Workspace**, e adicionar o mapeamento dos pacotes com o comando abaixo.
 
-No arquivo `main.ts` dentro da pasta `.storybook`, adicione as linhas abaixo à propriedade `stories`.
-
-```txt
-"../packages/**/*.mdx",
-"../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+```bash
+printf 'import type { StorybookConfig } from "@storybook/react-vite";\nimport type { UserConfig } from "vite";\n\nimport path, { join, dirname } from "path";\n\n/**\n * This function is used to resolve the absolute path of a package.\n * It is needed in projects that use Yarn PnP or are set up within a monorepo.\n */\nfunction getAbsolutePath(value: string): any {\n  return dirname(require.resolve(join(value, "package.json")));\n}\nconst config: StorybookConfig = {\n  stories: [\n    "../stories/**/*.mdx",\n    "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",\n    "../packages/**/*.mdx",\n    "../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",\n  ],\n  addons: [\n    getAbsolutePath("@storybook/addon-links"),\n    getAbsolutePath("@storybook/addon-essentials"),\n    getAbsolutePath("@storybook/addon-onboarding"),\n    getAbsolutePath("@storybook/addon-interactions"),\n  ],\n  framework: {\n    name: getAbsolutePath("@storybook/react-vite"),\n    options: {},\n  },\n  docs: {\n    autodocs: "tag",\n  },\n  async viteFinal(config: UserConfig) {\n    // Garantir que config.resolve e config.resolve.alias existam\n    config.resolve = config.resolve || {};\n    config.resolve.alias = config.resolve.alias || {};\n\n    config.resolve.alias = {\n      ...config.resolve.alias,\n      "@react-lib-components/pacote-um": path.resolve(\n        __dirname,\n        "../packages/pacote-um/src",\n      ),\n      "@react-lib-components/pacote-dois": path.resolve(\n        __dirname,\n        "../packages/pacote-dois/src",\n      ),\n    };\n\n    return config;\n  },\n};\n\nexport default config;\n' > ./.storybook/main.ts
 ```
 
-Ficará da seguinte forma:
+<details>
+<summary>Ou clique aqui para copiar e colar o conteúdo manualmente.</summary>
+<br />
 
 ```ts
-stories: [
+import type { StorybookConfig } from "@storybook/react-vite";
+import type { UserConfig } from "vite";
+
+import path, { join, dirname } from "path";
+
+/**
+ * This function is used to resolve the absolute path of a package.
+ * It is needed in projects that use Yarn PnP or are set up within a monorepo.
+ */
+function getAbsolutePath(value: string): any {
+  return dirname(require.resolve(join(value, "package.json")));
+}
+const config: StorybookConfig = {
+  stories: [
     "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     "../packages/**/*.mdx",
     "../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
+  addons: [
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-onboarding"),
+    getAbsolutePath("@storybook/addon-interactions"),
+  ],
+  framework: {
+    name: getAbsolutePath("@storybook/react-vite"),
+    options: {},
+  },
+  docs: {
+    autodocs: "tag",
+  },
+  async viteFinal(config: UserConfig) {
+    // Garantir que config.resolve e config.resolve.alias existam
+    config.resolve = config.resolve || {};
+    config.resolve.alias = config.resolve.alias || {};
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@react-lib-components/pacote-um": path.resolve(
+        __dirname,
+        "../packages/pacote-um/src",
+      ),
+      "@react-lib-components/pacote-dois": path.resolve(
+        __dirname,
+        "../packages/pacote-dois/src",
+      ),
+    };
+
+    return config;
+  },
+};
+
+export default config;
 ```
 
-Agora vamos adicionar a nossa primeira história. Dentro da pasta `./packages/pacote-um/src`, crie o arquivo `Button.stories.tsx` com o comando abaixo.
+</details>
+
+### Stories
+
+Agora vamos adicionar a nossa primeira história. Dentro da pasta `./packages/pacote-dois/src`, crie o arquivo `Button.stories.tsx` com o comando abaixo.
 
 ```bash
-printf 'import type { Meta, StoryObj } from "@storybook/react";\n\nimport Button from "./Button";\n\nconst meta = {\n  title: "PacoteUm/Button",\n  component: Button,\n  parameters: {\n    layout: "centered",\n  },\n  tags: ["autodocs"],\n  argTypes: {},\n} satisfies Meta<typeof Button>;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nexport const Large: Story = {\n  args: {\n    size: "large",\n    label: "Button",\n    variant: "contained",\n  },\n};\n' > ./packages/pacote-um/src/Button.stories.tsx
+printf 'import type { Meta, StoryObj } from "@storybook/react";\n\nimport Button from "./Button";\n\nconst meta = {\n  title: "PacoteUm/Button",\n  component: Button,\n  parameters: {\n    layout: "centered",\n  },\n  tags: ["autodocs"],\n  argTypes: {},\n} satisfies Meta<typeof Button>;\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nexport const Large: Story = {\n  args: {\n    size: "large",\n    label: "Button",\n    variant: "contained",\n  },\n};\n' > ./packages/pacote-dois/src/Button.stories.tsx
 ```
 
 <details>
@@ -1203,9 +1264,7 @@ O Storybook deve estar como na imagem abaixo, nosso Button dentro da seção `PA
 
 ![Stories](../images/new_stories.png)
 
-## Commitizen
-
-:bulb: _Etapa opcional!_
+## Commitizen (Opcional)
 
 [Commitizen](https://commitizen-tools.github.io/commitizen/) é uma ferramenta de linha de comando que padroniza as mensagens de commit do Git. Ele guia os desenvolvedores por um prompt de perguntas para criar um commit formatado de forma consistente e legível, facilitando a automação de versionamento e geração de changelogs. É amplamente usado em projetos que seguem as convenções de mensagens de commit, como o [Conventional Commits](https://www.conventionalcommits.org/).
 
