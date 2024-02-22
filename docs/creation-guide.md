@@ -9,7 +9,7 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
   - [Git](#git)
   - [Package.json e Workspaces](#packagejson-e-workspaces)
   - [EditorConfig](#editorconfig)
-- [Dependências](#dependencias)
+- [Dependências](#dependências)
   - [Prettier](#prettier)
   - [Eslint](#eslint)
   - [Typescript](#typescript)
