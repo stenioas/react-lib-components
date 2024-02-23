@@ -24,12 +24,12 @@ Template para monorepo de componentes React + Typescript + Material UI + Lerna +
   - [Estrutura dos pacotes](#estrutura-dos-pacotes)
   - [Pacote Um](#pacote-um)
   - [Pacote Dois](#pacote-dois)
-  - [Integração dos pacotes](#integração-entre-pacotes)
+  - [Integração entre pacotes](#integração-entre-pacotes)
   - [Executando os testes](#executando-os-testes)
-  - TODO: Publicando pacotes
 - [Storybook](#storybook)
   - [Stories](#stories)
 - [Commitizen (Opcional)](#commitizen-opcional)
+- [Publicando pacotes](#publicando-pacotes)
 
 </details>
 
@@ -989,6 +989,12 @@ export default Button;
 
 </details>
 
+Crie o arquivo `index.ts`, dentro da pasta `src`, para centralizar as exportações do nosso pacote.
+
+```bash
+printf "export { default as Button } from \"./Button\";\nexport * from \"./Button\";\n" > ./packages/pacote-dois/src/index.ts
+```
+
 #### Testes com Jest
 
 Agora vamos configurar o Jest dentro do pacote. Adicione o arquivo de configuração do Jest ao `pacote-dois` com o comando abaixo.
@@ -1142,8 +1148,6 @@ Agora vamos executar os testes para ver se tudo está funcionando corretamente c
 ```bash
 npm run test
 ```
-
-### @TODO: Publicando pacotes
 
 ## Storybook
 
@@ -1300,3 +1304,21 @@ npx commitizen init cz-conventional-changelog --npm --save-dev --exact
 | `--npm`      | Especifica que o NPM deve ser usado para instalar o adaptador. Útil em ambientes com múltiplos gerenciadores de pacotes.               |
 | `--save-dev` | Adiciona o adaptador como uma dependência de desenvolvimento no arquivo `package.json`. Não será incluído em produção.                 |
 | `--exact`    | Garante a instalação da versão exata do adaptador, sem usar range de versões, para consistência entre os ambientes de desenvolvimento. |
+
+### Publicando pacotes
+
+Chegou a hora de publicar nossos pacotes, permitindo que eles possam ser utilizados em outros projetos.
+
+Vamos começar adicionando alguns scripts ao package.json.
+
+```bash
+cd ./packages/pacote-um && npm pkg set scripts.prebuild="rimraf build" scripts.build="tsc" scripts.clean="rimraf build tsconfig.tsbuildinfo coverage" && cd ../../packages/pacote-dois && npm pkg set scripts.prebuild="rimraf build" scripts.build="tsc" scripts.clean="rimraf build tsconfig.tsbuildinfo coverage" && cd ../..
+```
+
+Agora vamos verificar se o build dos pacotes está ocorrendo de forma correta.
+
+```bash
+npm run build
+```
+
+@ETAPA INCOMPLETA
